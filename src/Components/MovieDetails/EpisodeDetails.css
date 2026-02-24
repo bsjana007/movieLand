@@ -1,0 +1,197 @@
+.episode-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	/* padding: 20px; */
+}
+
+.episode-path {
+	display: flex;
+	/* align-items: center; */
+	flex-direction: column;
+	gap: 10px;
+	font-size: 14px;
+	/* color: #888; */
+}
+
+.episode-title-rating-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.show-name {
+	height: 25px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	/* justify-content: center; */
+}
+
+.tv-title {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.tv-title:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.season-number {
+	font-size: 16px;
+	font-weight: 500;
+	color: yellow;
+}
+
+.season-number:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.episode-number {
+	font-size: 16px;
+	font-weight: 500;
+	color: #f63049;
+}
+
+.episode-title {
+	font-size: 48px;
+	font-weight: 600;
+}
+
+.episode-details {
+	margin-top: 5px;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+}
+
+.episode-details p {
+	height: 14px;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+	color: #a9a7a7;
+}
+
+.dot {
+	height: 5px;
+	width: 5px;
+	border-radius: 100%;
+}
+
+.episode-banner {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	height: 460px;
+	width: auto;
+}
+
+.video {
+	height: 450px;
+	width: 1120px;
+	border-radius: 14px;
+}
+
+.video iframe {
+	height: 100%;
+	width: 100%;
+	/* max-width: 900px; */
+	aspect-ratio: 16 / 9;
+	border: none;
+	border-radius: 14px;
+}
+
+.imdb-rating {
+	display: inline-flex;
+	flex-direction: column;
+	gap: 6px;
+	/* background: #1c1c1c; */
+	padding: 16px 20px;
+	border-radius: 12px;
+	width: fit-content;
+}
+
+/* Small top label */
+.rating-label {
+	font-size: 12px;
+	letter-spacing: 1.5px;
+	color: #9e9e9e;
+	margin: 0;
+	font-weight: 600;
+}
+
+/* Main rating row */
+.rating-content {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Star icon */
+.star {
+	color: #f5c518; /* IMDb yellow */
+	font-size: 26px;
+}
+
+/* Rating number */
+.rating-value {
+	font-size: 26px;
+	font-weight: 700;
+	color: white;
+}
+
+.out-of {
+	font-size: 16px;
+	font-weight: 500;
+	color: #9e9e9e;
+	margin-left: 4px;
+}
+
+/* Vote count */
+.rating-count {
+	font-size: 14px;
+	color: #9e9e9e;
+	margin: 0;
+	font-weight: 600;
+	font-family: Poppins, sans-serif;
+}
+
+.overview p {
+	font-size: 16px;
+	line-height: 1.5;
+	/* font-family: Poppins, sans-serif; */
+}
+
+.divider {
+	margin-top: 13px;
+	height: 1px;
+	width: 100%;
+	background: rgb(149, 147, 147);
+}
+
+.overview-section {
+	display: flex;
+	align-items: flex-start;
+	/* justify-content: space-around; */
+	gap: 30px;
+	border: 1px solid #908c8c;
+	padding: 12px;
+	border-radius: 14px;
+}
+
+.overview-genre-section {
+	width: 900px;
+	/* border: 1px solid #908c8c; */
+}
+
+.streaming-text {
+	color: yellow;
+	font-family: Poppins, sans-serif;
+	font-weight: 600;
+	font-size: 13px;
+	letter-spacing: 1.5px;
+}

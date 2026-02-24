@@ -1,0 +1,25 @@
+.loader-container {
+	/* background: linear-gradient(180deg, #242424, #134e5e); */
+	/* 'd-flex' equivalent */
+	display: flex;
+
+	/* 'justify-content-center' equivalent */
+	justify-content: center;
+
+	/* 'text-center' equivalent (for inline elements) */
+	text-align: center;
+
+	/* 'container' equivalent */
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+
+	/* Optional: If you want it centered vertically on the screen */
+	/* align-items: center; */
+	/* min-height: 100vh; */
+}
+
+.loader-container img {
+	/* Ensures the image behaves as a block if needed */
+	display: block;
+}

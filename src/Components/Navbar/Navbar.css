@@ -1,0 +1,256 @@
+.navbar {
+	background-color: #242424;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	text-align: center;
+}
+
+.logo {
+	height: 43px;
+	width: auto;
+	margin: 2px 20px;
+}
+
+.nav-outer {
+	display: flex;
+	height: 50px;
+	align-items: center;
+	justify-content: space-around;
+	/* justify-content: space-between; */
+}
+
+.nav-links {
+	display: flex;
+	/* align-items: center; */
+	justify-content: center;
+	flex-direction: column;
+}
+
+.nav-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+
+.nav-item li {
+	list-style: none;
+}
+
+.nav-link a {
+	text-decoration: none;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.nav-link {
+	text-decoration: none;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.item-padding {
+	padding: 0 10px 0 10px;
+}
+
+.nav-search {
+	background-color: white;
+
+	border-radius: 10px;
+}
+
+.search {
+	border: none;
+	border-radius: 10px;
+	height: 35px;
+	width: 800px;
+	outline: none;
+	transition:
+		box-shadow 0.3s ease,
+		border-color 0.3s ease;
+}
+.search:focus {
+	border-color: #bde8f5;
+	box-shadow: 0 0 0 2px rgba(32, 141, 237, 0.6);
+}
+
+.search-button {
+	margin: 5px;
+	background-color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 10px;
+}
+.nav-wish a {
+	text-decoration: none;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+}
+.nav-login {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.login-btn {
+	background: transparent;
+	font-weight: 500;
+	cursor: pointer;
+	text-decoration: none;
+	color: white;
+}
+
+.login-btn:hover {
+	text-decoration: underline;
+}
+
+.signup-btn {
+	text-decoration: none;
+	background: #3fedd9;
+	color: black;
+	border: none;
+	padding: 6px 14px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.signup-btn:hover {
+	background: #258a82;
+}
+
+/* custom dropdown */
+.nav {
+	list-style: none;
+	display: flex;
+}
+
+/* parent */
+.dropdown-parent {
+	position: relative;
+	cursor: pointer;
+}
+
+/* menu hidden by default */
+.dropdown-menu {
+	border: 1px solid rgba(255, 255, 255, 0.32);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #242424;
+	min-width: 170px;
+	border-radius: 6px;
+	margin-top: 2px;
+	padding: 8px 0;
+	display: none;
+	z-index: 1000;
+}
+
+/* SHOW ON HOVER (desktop) */
+.dropdown-parent:hover .dropdown-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* SHOW ON CLICK (mobile) */
+.dropdown-parent.open .dropdown-menu {
+	display: block;
+}
+
+.dropdown-menu li {
+	/* border: 1px solid rgba(255, 255, 255, 0.32); */
+	padding: 8px 15px;
+	width: 140px;
+}
+
+.divider {
+	height: 1px;
+	width: 90%;
+	background: rgba(255, 255, 255, 0.32);
+}
+
+.dropdown-menu li a {
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-menu li:hover {
+	background: #134e5e;
+	width: 140px;
+}
+
+.fa-magnifying-glass {
+	color: black;
+}
+
+/* search-dropdown */
+.search-dropdown {
+	position: absolute;
+	top: 101%;
+	left: 0;
+	width: 100%;
+	background: #0f0f0f;
+	border-radius: 10px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+	z-index: 999;
+	max-height: 360px;
+	overflow-y: auto;
+	padding: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar {
+	display: none;
+}
+
+/* Full-width row */
+.search-item-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* 🔑 pushes poster to right */
+	padding: 10px 12px;
+	cursor: pointer;
+}
+
+.search-item-row:hover {
+	background: #1f1f1f;
+}
+
+/* LEFT SIDE */
+.search-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.search-badge {
+	font-size: 11px;
+	padding: 2px 6px;
+	background: #333;
+	border-radius: 4px;
+	opacity: 0.8;
+	-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.search-title {
+	font-size: 14px;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* RIGHT SIDE POSTER */
+.search-right img {
+	width: 40px;
+	height: 60px;
+	object-fit: cover;
+	border-radius: 4px;
+}
