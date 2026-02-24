@@ -10,8 +10,7 @@ function MovieState(props) {
 		method: "GET",
 		headers: {
 			accept: "application/json",
-			Authorization:
-				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGI1NjBlNWE3OGE4ZmQ3YzdmNjQ5ODczYjgyNzVhMiIsIm5iZiI6MTc2ODAyNTA2NS43ODgsInN1YiI6IjY5NjFlYmU5YjEyYjNjZmY2MTNkNjk2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lK5JY5uMJyixCUwLx5PrjkjHXSVOCSoNrEVNicM4mvg",
+			Authorization: import.meta.env.VITE_TMDB_BEARER,
 		},
 	};
 
@@ -234,13 +233,7 @@ function MovieState(props) {
 		setLoadingDetails(true);
 		setMovieDetails(null);
 		try {
-			const response = await fetch(`${host}/movie/${id}`, {
-				headers: {
-					Authorization:
-						"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGI1NjBlNWE3OGE4ZmQ3YzdmNjQ5ODczYjgyNzVhMiIsIm5iZiI6MTc2ODAyNTA2NS43ODgsInN1YiI6IjY5NjFlYmU5YjEyYjNjZmY2MTNkNjk2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lK5JY5uMJyixCUwLx5PrjkjHXSVOCSoNrEVNicM4mvg",
-					accept: "application/json",
-				},
-			});
+			const response = await fetch(`${host}/movie/${id}`, options);
 			const data = await response.json();
 			setMovieDetails(data);
 		} catch (error) {
@@ -252,13 +245,7 @@ function MovieState(props) {
 	};
 
 	const fetchMovieImages = async (id) => {
-		const response = await fetch(`${host}/movie/${id}/images`, {
-			headers: {
-				Authorization:
-					"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGI1NjBlNWE3OGE4ZmQ3YzdmNjQ5ODczYjgyNzVhMiIsIm5iZiI6MTc2ODAyNTA2NS43ODgsInN1YiI6IjY5NjFlYmU5YjEyYjNjZmY2MTNkNjk2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lK5JY5uMJyixCUwLx5PrjkjHXSVOCSoNrEVNicM4mvg",
-				accept: "application/json",
-			},
-		});
+		const response = await fetch(`${host}/movie/${id}/images`, options);
 		const data = await response.json();
 		// console.log(data);
 		setMovieImages(data.backdrops || []);
