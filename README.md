@@ -74,7 +74,7 @@ cd movieLand/backend
 npm install
 ```
 
-Create a .env file inside the backend folder:
+Create a ```.env``` file inside the backend folder:
 
 ```env
 PORT=3000
