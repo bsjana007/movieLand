@@ -141,15 +141,15 @@ movieLand/
 
 ### Example API Endpoints
 
-GET /api/movies → Fetch all movies
+- GET /api/movies → Fetch all movies
 
-GET /api/movies/:id → Fetch single movie details
+- GET /api/movies/:id → Fetch single movie details
 
-GET /api/webseries → Fetch web series
+- GET /api/webseries → Fetch web series
 
-GET /api/episodes/:id → Fetch episode details
+- GET /api/episodes/:id → Fetch episode details
 
-GET /api/characters/:id → Fetch character details
+- GET /api/characters/:id → Fetch character details
 
 (Adjust according to your actual backend routes)
 
