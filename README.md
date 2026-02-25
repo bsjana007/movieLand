@@ -157,6 +157,6 @@ GET /api/characters/:id → Fetch character details
 
 ## Author
 
-Bhabani Sankar Jana
-MERN Stack Developer | B.Tech CSE Student
+Bhabani Sankar Jana<br/>
+MERN Stack Developer | B.Tech CSE Student<br/>
 Passionate about Full-Stack Development and building scalable web applications 🚀
