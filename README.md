@@ -150,6 +150,7 @@ GET /api/webseries → Fetch web series
 GET /api/episodes/:id → Fetch episode details
 
 GET /api/characters/:id → Fetch character details
+
 (Adjust according to your actual backend routes)
 
 ---
