@@ -125,14 +125,105 @@ movieLand/
 ├── public/                  # Static files
 │   └── index.html
 │
-├── src/                     # React frontend
+├── src/
+│   ├── assets/                   # React frontend
 │   ├── components/         # Reusable components
-│   ├── pages/              # Page-level components
-│   ├── services/           # API services
+│   │   ├──BengaliMovies/
+│   │   │  ├── BengaliMovies.jsx
+│   │   │  └── BengaliMovies.css
+│   │   ├──Footer/
+│   │   │  ├── Footer.jsx
+│   │   │  └── Footer.css
+│   │   ├──HindiMovies/
+│   │   │  ├── HindiMovies.jsx
+│   │   │  └── HindiMovies.css
+│   │   ├──home/
+│   │   │  ├── Home.jsx
+│   │   │  └── Home.css
+│   │   ├──HomeIndian/
+│   │   │  ├── HomeIndian.jsx
+│   │   │  └── HomeIndian.css
+│   │   ├──Indian/
+│   │   │  ├── IndianMovies.jsx
+│   │   │  └── IndianMovies.css
+│   │   ├──KanadaMovies/
+│   │   │  ├── KanadaMovies.jsx
+│   │   │  └── KanadaMovies.css
+│   │   ├──LanguageBar/
+│   │   │  ├── LanguageBar.jsx
+│   │   │  └── LanguageBar.css
+│   │   ├──Loader/
+│   │   │  ├── Loader.jsx
+│   │   │  └── Loader.css
+│   │   ├──MalayalamMovies/
+│   │   │  ├── MalayalamMovies.jsx
+│   │   │  └── malayalamMovies.css
+│   │   ├──MovieDetails/
+│   │   │  ├── MovieDetails.jsx
+│   │   │  ├── MovieDetails.css
+│   │   │  ├── EpisodeDetails.jsx
+│   │   │  ├── EpisodeDetails.css
+│   │   │  ├── SeasonDetails.css
+│   │   │  └── TvDetails.css
+│   │   ├──Movies/
+│   │   │  ├── MoviesGLoabl.jsx
+│   │   │  ├── MoviesGLoabl.css
+│   │   │  └── TvGlobal.css
+│   │   ├──Navbar/
+│   │   │  ├── Navbar.jsx
+│   │   │  └── Navbar.css
+│   │   ├──Pages/
+│   │   │  ├── Login.jsx
+│   │   │  ├── Login.css
+│   │   │  ├── SignUp.jsx
+│   │   │  └── SignUp.css
+│   │   ├──Popular/
+│   │   │  ├── Popular.jsx
+│   │   │  ├── Popular.css
+│   │   │  ├── PopularIndian.jsx
+│   │   │  ├── PopularTv.jsx
+│   │   │  ├── PopularTvHome.jsx
+│   │   │  └── PopularTvHome.css
+│   │   ├──TamilMocies/
+│   │   │  ├── TamilMovies.jsx
+│   │   │  └── TamilMovies.css
+│   │   ├──TeleguMovies/
+│   │   │  ├── TeleguMovies.jsx
+│   │   │  └── TeleguMovies.css
+│   │   ├──TopRated/
+│   │   │  ├── Toprated.jsx
+│   │   │  ├── ToprRatedIndian.jsx
+│   │   │  ├── ToprRatedTv.jsx
+│   │   │  └── TopRated.css
+│   │   ├──Trending/
+│   │   │  ├── Trending.jsx
+│   │   │  ├── TrendingIndian.jsx
+│   │   │  ├── TrendingTv.jsx
+│   │   │  ├── TrendingTvHome.jsx
+│   │   │  ├── TrendingTvHome.css
+│   │   │  └── Trending.css
+│   │   ├──Upcoming/
+│   │   │  ├── Upcoming.jsx
+│   │   │  ├── AiringToday.jsx
+│   │   │  ├── UpcomingIndian.jsx
+│   │   │  └── Upcoming.css
+│   │   ├──Watchlist/
+│   │   │  ├── Watchlist.jsx
+│   │   │  └── Watchlist.css
+│   │   │
+│   │   └──ScrollToTop.jsx
+│   │
+│   ├──Context/
+│   │   ├── MovieState.jsx
+│   │   └── movieContext.js
+│   │
 │   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
 │   └── main.jsx
 │
 ├── package.json
+├── index.html
 ├── vite.config.js
 └── README.md
 ```
