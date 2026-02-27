@@ -3,9 +3,12 @@ import { body, validationResult } from "express-validator";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+// import dotenv from "dotenv";
+import process from "process";
+// dotenv.config();
 
 const router = express.Router();
-const JWT_SECRET = "bhabanisankar$";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // SIGNUP
 

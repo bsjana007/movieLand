@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import process from "process";
 dotenv.config();
 
-// const JWT_SECRET = "bhabanisankar$";
 const JWT_SECRET = process.env.JWT_SECRET;
 // const DEV_USER_ID = "6978f6c9b8b022328f89d47e";
 

@@ -40,8 +40,8 @@ The project is built using **React (Frontend)**, **Node.js & Express (Backend)**
 
 - React.js
 - React Router DOM
-- Axios / Fetch API
-- CSS / Tailwind (if used)
+- Fetch API
+- CSS
 - Vite (Build Tool)
 
 ### 🔹 Backend

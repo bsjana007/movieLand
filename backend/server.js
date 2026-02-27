@@ -1,10 +1,10 @@
-import express from "express";
+import dotenv from "dotenv";
+dotenv.config({ path: "./backend/.env" });
 import cors from "cors";
+import express from "express";
 import connectToMongo from "./db.js";
 import watchlist from "./routes/watchlist.js";
 import authRoutes from "./routes/auth.js";
-import dotenv from "dotenv";
-dotenv.config();
 
 connectToMongo();
 
