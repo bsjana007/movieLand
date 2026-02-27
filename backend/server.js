@@ -3,6 +3,8 @@ import cors from "cors";
 import connectToMongo from "./db.js";
 import watchlist from "./routes/watchlist.js";
 import authRoutes from "./routes/auth.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 connectToMongo();
 

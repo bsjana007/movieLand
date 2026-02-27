@@ -323,7 +323,7 @@ function MovieState(props) {
 	};
 
 	const addToWatchlist = async (movie) => {
-		console.log("adding movie", movie);
+		// console.log("adding movie", movie);
 
 		const response = await fetch(`${backendHost}/api/watchlist/add`, {
 			method: "POST",
@@ -339,10 +339,10 @@ function MovieState(props) {
 		});
 		const data = await response.json();
 		setWatchlist(data);
-		console.log(data);
+		// console.log(data);
 	};
 	const addToWatchlistTv = async (movie) => {
-		console.log("adding movie", movie);
+		// console.log("adding movie", movie);
 
 		const response = await fetch(`${backendHost}/api/watchlist/add`, {
 			method: "POST",
@@ -358,7 +358,7 @@ function MovieState(props) {
 		});
 		const data = await response.json();
 		setWatchlistTv(data);
-		console.log(data);
+		// console.log(data);
 	};
 
 	const removeFromWatchlist = async (movieId) => {
@@ -371,7 +371,7 @@ function MovieState(props) {
 	};
 
 	const removeFromWatchlistTv = async ({ movieId, media_type }) => {
-		console.log("removing movie", movieId);
+		// console.log("removing movie", movieId);
 
 		const response = await fetch(`${backendHost}/api/watchlist/${movieId}`, {
 			method: "DELETE",
@@ -383,7 +383,7 @@ function MovieState(props) {
 		});
 		const data = await response.json();
 		setWatchlistTv(data);
-		console.log(data);
+		// console.log(data);
 	};
 
 	const searchAll = async (query) => {
@@ -401,7 +401,7 @@ function MovieState(props) {
 	const fetchTrendingTvShows = async () => {
 		const response = await fetch(`${host}/trending/tv/week`, options);
 		const data = await response.json();
-		console.log(data.results);
+		// console.log(data.results);
 		setTrendingTvShows(data.results);
 	};
 
@@ -515,7 +515,7 @@ function MovieState(props) {
 			);
 			const data = await response.json();
 			setEpisodeDetails(data);
-			console.log(data);
+			// console.log(data);
 		} catch (error) {
 			console.error("Error Fetching Tv Details:", error);
 		} finally {
