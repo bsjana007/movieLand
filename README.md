@@ -92,7 +92,7 @@ nodemon server.js
 Backend will run on:
 
 ```bash
-http://localhost:3000
+http://localhost:5000
 ```
 
 ### Frontend Setup
