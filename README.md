@@ -103,6 +103,7 @@ Open a new terminal:
 cd movieLand
 npm install
 npm create vite@latest
+npm i react-router-dom
 npm run dev
 ```
 
