@@ -71,7 +71,9 @@ git clone https://github.com/bsjana007/movieLand.git
 
 ```bash
 cd movieLand/backend
-npm install
+npm init -y
+npm i express cors dotenv mongoose express-validator bcryptjs jsonwebtoken
+npm i nodemon
 ```
 
 Create a `.env` file inside the backend folder:
@@ -84,7 +86,7 @@ MONGO_URI=your_mongodb_connection_string
 Start backend server:
 
 ```bash
-npm start
+nodemon server.js
 ```
 
 Backend will run on:
@@ -93,13 +95,14 @@ Backend will run on:
 http://localhost:3000
 ```
 
-### Backend Setup
+### Frontend Setup
 
 Open a new terminal:
 
 ```bash
 cd movieLand
 npm install
+npm create vite@latest
 npm run dev
 ```
 
