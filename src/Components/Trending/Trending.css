@@ -19,7 +19,10 @@
 	overflow: hidden;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 	background: #000;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 	position: relative;
 }
 

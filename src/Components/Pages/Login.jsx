@@ -67,7 +67,7 @@ function Login() {
 										id="email"
 										className="login-input"
 										name="email"
-										autocomplete="off"
+										autoComplete="off"
 									/>
 								</div>
 								<div className="input-border"></div>

@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ path: "./backend/.env" });
+// console.log("CWD:", process.cwd());
+// console.log("ENV after load:", process.env.JWT_SECRET);
 import cors from "cors";
 import express from "express";
 import connectToMongo from "./db.js";

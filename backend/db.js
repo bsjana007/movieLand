@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import process from "process";
+import dotenv from "dotenv";
+dotenv.config({ path: "./backend/.env" });
 
 const mongoURI = process.env.MONGO_URI;
 // console.log(mongoURI);

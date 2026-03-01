@@ -13,6 +13,21 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+body {
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
+}
+
+a,
+button,
+input {
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
+}
 /* a {
   font-weight: 500;
   color: #646cff;

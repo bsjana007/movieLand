@@ -82,7 +82,10 @@
 	margin: 5px;
 	background-color: white;
 	border: none;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 	border-radius: 10px;
 }
 .nav-wish a {
@@ -100,7 +103,10 @@
 .login-btn {
 	background: transparent;
 	font-weight: 500;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 	text-decoration: none;
 	color: white;
 }
@@ -116,7 +122,10 @@
 	border: none;
 	padding: 6px 14px;
 	border-radius: 6px;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 }
 
 .signup-btn:hover {
@@ -132,7 +141,10 @@
 /* parent */
 .dropdown-parent {
 	position: relative;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 }
 
 /* menu hidden by default */
@@ -214,7 +226,10 @@
 	align-items: center;
 	justify-content: space-between; /* 🔑 pushes poster to right */
 	padding: 10px 12px;
-	cursor: pointer;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 }
 
 .search-item-row:hover {

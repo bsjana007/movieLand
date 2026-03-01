@@ -4,11 +4,12 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
-import process from "process";
+// import process from "process";
 // dotenv.config();
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = process.env.JWT_SECRET;
+// console.log(JWT_SECRET);
 
 // SIGNUP
 
@@ -51,12 +52,15 @@ router.post(
 					id: user._id,
 				},
 			};
-			const token = jwt.sign(data, JWT_SECRET, { expiresIn: "7d" });
+			const token = jwt.sign(data, process.env.JWT_SECRET, {
+				expiresIn: "7d",
+			});
 			res.status(200).json({
 				token,
 			});
-		} catch {
-			res.status(500).json({ message: "SIgnup Failed" });
+		} catch (error) {
+			console.error("signup error:", error);
+			res.status(500).json({ message: error.message });
 		}
 	},
 );
@@ -94,7 +98,9 @@ router.post(
 					id: user._id,
 				},
 			};
-			const token = jwt.sign(data, JWT_SECRET, { expiresIn: "7d" });
+			const token = jwt.sign(data, process.env.JWT_SECRET, {
+				expiresIn: "7d",
+			});
 			res.json({
 				token,
 				user: {

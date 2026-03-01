@@ -22,7 +22,7 @@ function SignUp() {
 			body: JSON.stringify({ name, email, password }),
 		});
 		const data = await response.json();
-		console.log(data);
+		// console.log(data);
 		if (data.token) {
 			localStorage.setItem("token", data.token);
 			navigate("/");
@@ -81,7 +81,7 @@ function SignUp() {
 										id="full-name"
 										className="signup-input-special"
 										name="name"
-										autocomplete="off"
+										autoComplete="off"
 									/>
 								</div>
 								<div className="input-border"></div>
@@ -103,7 +103,7 @@ function SignUp() {
 										id="email"
 										className="signup-input"
 										name="email"
-										autocomplete="off"
+										autoComplete="off"
 									/>
 								</div>
 								<div className="input-border"></div>

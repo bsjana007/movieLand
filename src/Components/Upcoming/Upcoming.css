@@ -11,7 +11,9 @@
 	overflow: hidden;
 	box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
 	cursor: pointer;
-	transition: transform 0.35s ease, box-shadow 0.35s ease;
+	transition:
+		transform 0.35s ease,
+		box-shadow 0.35s ease;
 }
 
 .movie-card:hover {
@@ -22,6 +24,10 @@
 .poster-wrapper {
 	position: relative;
 	overflow: hidden;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 }
 
 .poster-wrapper img {
@@ -51,6 +57,10 @@
 
 .movie-content {
 	padding: 14px;
+	cursor:
+		url("https://cdn.cursors-4u.net/css-previews/hell-yeah-pointer-6-f3f45339-css.webp")
+			1 1,
+		auto !important;
 }
 
 .movie-title {

@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import MovieState from "./context/MovieState";
 import "./App.css";
+import Lenis from "@studio-freight/lenis";
 import Home from "./Components/home/Home";
 import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -23,9 +24,25 @@ import TvGlobal from "./Components/Movies/TvGlobal";
 import TvDetails from "./Components/MovieDetails/TvDetails";
 import SeasonDetails from "./Components/MovieDetails/SeasonDetails";
 import EpisodeDetails from "./Components/MovieDetails/EpisodeDetails";
+import { useEffect } from "react";
 // import AuthSuccess from "./Components/Pages/AuthSuccess";
 
 function App() {
+	useEffect(() => {
+		const lenis = new Lenis({
+			duration: 1.2,
+			easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)),
+			smoothWheel: true,
+			smoothTouch: false,
+		});
+
+		function smoothScroll(time) {
+			lenis.raf(time);
+			requestAnimationFrame(smoothScroll);
+		}
+
+		requestAnimationFrame(smoothScroll);
+	});
 	return (
 		<>
 			<MovieState>
