@@ -52,7 +52,7 @@ function BengaliMovies() {
 					</div>
 				))}
 
-				{/* 🔥 SEE MORE CARD */}
+				{/* SEE MORE CARD */}
 				{!loading && page < totalPages && (
 					<div
 						className="movie-card see-more-card"
@@ -65,7 +65,7 @@ function BengaliMovies() {
 					</div>
 				)}
 
-				{/* 🔥 SKELETON CARDS (shown while loading) */}
+				{/* SKELETON CARDS (shown while loading) */}
 				{loading &&
 					Array.from({ length: 8 }).map((_, index) => (
 						<div
