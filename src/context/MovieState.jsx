@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import MovieContext from "./movieContext";
 
 function MovieState(props) {
-	// const { id } = useParams();
-	// const accountId = 22640956;
 	const host = "https://api.themoviedb.org/3";
 	const options = {
 		method: "GET",
