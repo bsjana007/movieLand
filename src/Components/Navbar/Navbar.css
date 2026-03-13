@@ -59,8 +59,8 @@
 
 .nav-search {
 	background-color: white;
-
 	border-radius: 10px;
+	position: relative;
 }
 
 .search {
@@ -213,11 +213,27 @@
 	z-index: 999;
 	max-height: 360px;
 	overflow-y: auto;
+	overscroll-behavior: contain;
+	pointer-events: auto;
 	padding: 6px 0;
 }
 
 .search-dropdown::-webkit-scrollbar {
-	display: none;
+	width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 10px;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+	background: #555;
+	border-radius: 10px;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb:hover {
+	background: #777;
 }
 
 /* Full-width row */
@@ -249,9 +265,6 @@
 	background: #333;
 	border-radius: 4px;
 	opacity: 0.8;
-	-webkit-scrollbar {
-		display: none;
-	}
 }
 
 .search-title {

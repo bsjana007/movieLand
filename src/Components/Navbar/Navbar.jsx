@@ -178,7 +178,7 @@ function Navbar() {
 						</button> */}
 						{/* search dropdown */}
 						{searchOpen && (
-							<div ref={searchRef} className="search-dropdown">
+							<div ref={searchRef} className="search-dropdown" data-lenis-prevent>
 								{results.length === 0 && (
 									<div className="search-empty">No Results</div>
 								)}
