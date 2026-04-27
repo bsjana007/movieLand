@@ -1,0 +1,118 @@
+.session-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	animation: fadeIn 0.4s ease-out forwards;
+}
+
+.session-modal-content {
+	background: rgba(25, 25, 30, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-radius: 24px;
+	padding: 40px 32px;
+	max-width: 420px;
+	width: 90%;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	transform: translateY(20px);
+	opacity: 0;
+	animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.session-modal-icon-wrapper {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	background: linear-gradient(
+		135deg,
+		rgba(255, 65, 108, 0.2),
+		rgba(255, 75, 43, 0.2)
+	);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 8px;
+	border: 1px solid rgba(255, 65, 108, 0.3);
+}
+
+.session-modal-icon-wrapper i {
+	font-size: 32px;
+	background: -webkit-linear-gradient(135deg, #ff416c, #ff4b2b);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.session-modal-content h2 {
+	font-size: 24px;
+	font-weight: 700;
+	color: #ffffff;
+	margin: 0;
+	letter-spacing: 0.5px;
+}
+
+.session-modal-content p {
+	font-size: 15px;
+	color: rgba(255, 255, 255, 0.7);
+	line-height: 1.5;
+	margin: 0;
+	margin-bottom: 12px;
+}
+
+.session-modal-btn {
+	background: linear-gradient(135deg, #ff416c, #ff4b2b);
+	border: none;
+	border-radius: 12px;
+	padding: 14px 28px;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	justify-content: center;
+	box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+}
+
+.session-modal-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
