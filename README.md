@@ -79,7 +79,7 @@ npm i nodemon
 Create a `.env` file inside the backend folder:
 
 ```env
-PORT=3000
+PORT=5000
 MONGO_URI=your_mongodb_connection_string
 ```
 
@@ -117,123 +117,216 @@ http://localhost:5173
 
 ### 📁 Folder Structure
 
-```code
+This is the complete file structure of the movieLand project.
+
+```
 movieLand/
 │
-├── backend/                  # Express backend
-│   ├── controllers/         # Business logic
-│   ├── models/              # Mongoose models
-│   ├── routes/              # API routes
-│   └── server.js            # Backend entry point
+├── .gitignore
+├── README.md
 │
-├── public/                  # Static files
-│
-│
-├── src/
-│   ├── assets/                   # React frontend
-│   ├── components/         # Reusable components
-│   │   ├──About/
-│   │   │  ├── About.jsx
-│   │   │  └── About.css
-│   │   ├──BengaliMovies/
-│   │   │  ├── BengaliMovies.jsx
-│   │   │  └── BengaliMovies.css
-│   │   ├──Footer/
-│   │   │  ├── Footer.jsx
-│   │   │  └── Footer.css
-│   │   ├──HindiMovies/
-│   │   │  ├── HindiMovies.jsx
-│   │   │  └── HindiMovies.css
-│   │   ├──home/
-│   │   │  ├── Home.jsx
-│   │   │  └── Home.css
-│   │   ├──HomeIndian/
-│   │   │  ├── HomeIndian.jsx
-│   │   │  └── HomeIndian.css
-│   │   ├──Indian/
-│   │   │  ├── IndianMovies.jsx
-│   │   │  └── IndianMovies.css
-│   │   ├──KanadaMovies/
-│   │   │  ├── KanadaMovies.jsx
-│   │   │  └── KanadaMovies.css
-│   │   ├──LanguageBar/
-│   │   │  ├── LanguageBar.jsx
-│   │   │  └── LanguageBar.css
-│   │   ├──Loader/
-│   │   │  ├── Loader.jsx
-│   │   │  └── Loader.css
-│   │   ├──MalayalamMovies/
-│   │   │  ├── MalayalamMovies.jsx
-│   │   │  └── malayalamMovies.css
-│   │   ├──MovieDetails/
-│   │   │  ├── MovieDetails.jsx
-│   │   │  ├── MovieDetails.css
-│   │   │  ├── EpisodeDetails.jsx
-│   │   │  ├── EpisodeDetails.css
-│   │   │  ├── SeasonDetails.css
-│   │   │  └── TvDetails.css
-│   │   ├──Movies/
-│   │   │  ├── MoviesGLoabl.jsx
-│   │   │  ├── MoviesGLoabl.css
-│   │   │  └── TvGlobal.css
-│   │   ├──Navbar/
-│   │   │  ├── Navbar.jsx
-│   │   │  └── Navbar.css
-│   │   ├──Pages/
-│   │   │  ├── Login.jsx
-│   │   │  ├── Login.css
-│   │   │  ├── SignUp.jsx
-│   │   │  └── SignUp.css
-│   │   ├──Popular/
-│   │   │  ├── Popular.jsx
-│   │   │  ├── Popular.css
-│   │   │  ├── PopularIndian.jsx
-│   │   │  ├── PopularTv.jsx
-│   │   │  ├── PopularTvHome.jsx
-│   │   │  └── PopularTvHome.css
-│   │   ├──TamilMocies/
-│   │   │  ├── TamilMovies.jsx
-│   │   │  └── TamilMovies.css
-│   │   ├──TeleguMovies/
-│   │   │  ├── TeleguMovies.jsx
-│   │   │  └── TeleguMovies.css
-│   │   ├──TopRated/
-│   │   │  ├── Toprated.jsx
-│   │   │  ├── ToprRatedIndian.jsx
-│   │   │  ├── ToprRatedTv.jsx
-│   │   │  └── TopRated.css
-│   │   ├──Trending/
-│   │   │  ├── Trending.jsx
-│   │   │  ├── TrendingIndian.jsx
-│   │   │  ├── TrendingTv.jsx
-│   │   │  ├── TrendingTvHome.jsx
-│   │   │  ├── TrendingTvHome.css
-│   │   │  └── Trending.css
-│   │   ├──Upcoming/
-│   │   │  ├── Upcoming.jsx
-│   │   │  ├── AiringToday.jsx
-│   │   │  ├── UpcomingIndian.jsx
-│   │   │  └── Upcoming.css
-│   │   ├──Watchlist/
-│   │   │  ├── Watchlist.jsx
-│   │   │  └── Watchlist.css
-│   │   │
-│   │   └──ScrollToTop.jsx
+├── backend/                          # Express.js Backend
+│   ├── .gitignore
+│   ├── db.js                         # Database connection setup
+│   ├── package-lock.json
+│   ├── package.json                  # Backend dependencies & scripts
+│   ├── server.js                     # Backend entry point
 │   │
-│   ├──Context/
-│   │   ├── MovieState.jsx
-│   │   └── movieContext.js
+│   ├── middleware/
+│   │   └── auth.js                   # Authentication middleware
 │   │
-│   ├── App.jsx
-│   ├── App.css
-│   ├── index.css
-│   └── main.jsx
+│   ├── models/
+│   │   └── User.js                   # Mongoose User model
+│   │
+│   └── routes/
+│       ├── auth.js                   # Authentication routes (login/register)
+│       └── watchlist.js              # Watchlist routes
 │
-├── package.json
-├── index.html
-├── vite.config.js
-└── README.md
+└── movieLand-frontend/               # React + Vite Frontend
+    ├── .gitignore
+    ├── eslint.config.js              # ESLint configuration
+    ├── index.html                    # HTML entry point
+    ├── package-lock.json
+    ├── package.json                  # Frontend dependencies & scripts
+    ├── vite.config.js                # Vite configuration
+    │
+    ├── public/
+    │   └── vite.svg                  # Vite logo
+    │
+    └── src/
+        ├── App.css                   # Global app styles
+        ├── App.jsx                   # Main app component with routing
+        ├── index.css                 # Global CSS
+        ├── main.jsx                  # React entry point
+        │
+        ├── assets/                   # Static images/assets
+        │   ├── movieLand.png
+        │   ├── no-movie.png
+        │   ├── no-profile-pic.jpeg
+        │   ├── webicon.png
+        │   └── webicon1.png
+        │
+        ├── Components/               # React components (organized by feature)
+        │   ├── ScrollToTop.jsx       # Scroll to top utility
+        │   │
+        │   ├── About/
+        │   │   ├── About.css
+        │   │   └── About.jsx
+        │   │
+        │   ├── BengaliMovies/
+        │   │   ├── BengaliMovies.css
+        │   │   └── BengaliMovies.jsx
+        │   │
+        │   ├── Footer/
+        │   │   ├── Footer.css
+        │   │   └── Footer.jsx
+        │   │
+        │   ├── HindiMovies/
+        │   │   ├── HindiMovies.css
+        │   │   └── HindiMovies.jsx
+        │   │
+        │   ├── home/
+        │   │   ├── Home.css
+        │   │   ├── Home.jsx
+        │   │   ├── HomeV2.css
+        │   │   └── HomeV2.jsx
+        │   │
+        │   ├── HomeIndian/
+        │   │   ├── HomeIndian.css
+        │   │   ├── HomeIndian.jsx
+        │   │   ├── HomeIndianV2.css
+        │   │   └── HomeIndianV2.jsx
+        │   │
+        │   ├── Indian/
+        │   │   ├── IndianMovies.css
+        │   │   └── IndianMovies.jsx
+        │   │
+        │   ├── KanadaMovies/
+        │   │   ├── kanadaMovies.css
+        │   │   └── KanadaMovies.jsx
+        │   │
+        │   ├── LanguageBar/
+        │   │   ├── LanguageBar.css
+        │   │   ├── LanguageBar.jsx
+        │   │   └── Languagebar.css
+        │   │
+        │   ├── LegalInfo/
+        │   │   ├── LegalInfo.css
+        │   │   └── LegalInfo.jsx
+        │   │
+        │   ├── Loader/
+        │   │   ├── Loader.css
+        │   │   ├── Loading.css
+        │   │   └── Loading.jsx
+        │   │
+        │   ├── MalayalamMovies/
+        │   │   ├── MalayalamMovies.css
+        │   │   └── MalayalamMovies.jsx
+        │   │
+        │   ├── MovieDetails/
+        │   │   ├── EpisodeDetails.css
+        │   │   ├── EpisodeDetails.jsx
+        │   │   ├── MovieDatails.jsx
+        │   │   ├── MovieDetails.css
+        │   │   ├── SeasonDetails.jsx
+        │   │   └── TvDetails.jsx
+        │   │
+        │   ├── Movies/
+        │   │   ├── MoviesGlobal.css
+        │   │   ├── MoviesGlobal.jsx
+        │   │   ├── MoviesGlobalV2.css
+        │   │   ├── MoviesGlobalV2.jsx
+        │   │   ├── TvGlobal.jsx
+        │   │   └── TvGlobalV2.jsx
+        │   │
+        │   ├── Navbar/
+        │   │   ├── Navbar.css
+        │   │   └── Navbar.jsx
+        │   │
+        │   ├── Pages/
+        │   │   ├── Login.css
+        │   │   ├── Login.jsx
+        │   │   ├── SignUp.css
+        │   │   └── SignUp.jsx
+        │   │
+        │   ├── Popular/
+        │   │   ├── Popular.css
+        │   │   ├── Popular.jsx
+        │   │   ├── PopularIndian.jsx
+        │   │   ├── PopularTv.jsx
+        │   │   ├── PopularTvHome.css
+        │   │   └── PopularTvHome.jsx
+        │   │
+        │   ├── SessionExpiredModal/
+        │   │   ├── SessionExpiredModal.css
+        │   │   ├── SessionExpiredModal.jsx
+        │   │   └── SessionHandler.jsx
+        │   │
+        │   ├── TamilMovies/
+        │   │   ├── TamilMovies.css
+        │   │   └── TamilMovies.jsx
+        │   │
+        │   ├── TeleguMovies/
+        │   │   ├── TeleguMovies.css
+        │   │   └── TeleguMovies.jsx
+        │   │
+        │   ├── TermsOfService/
+        │   │   ├── TermsOfService.css
+        │   │   └── TermsOfService.jsx
+        │   │
+        │   ├── Toprated/
+        │   │   ├── TopRated.css
+        │   │   ├── TopRated.jsx
+        │   │   ├── TopRatedIndian.jsx
+        │   │   └── TopRatedTv.jsx
+        │   │
+        │   ├── Trending/
+        │   │   ├── Trending.css
+        │   │   ├── Trending.jsx
+        │   │   ├── TrendingIndian.jsx
+        │   │   ├── TrendingTv.jsx
+        │   │   ├── TrendingTvHome.css
+        │   │   └── TrendingTvHome.jsx
+        │   │
+        │   ├── Upcoming/
+        │   │   ├── AiringTodayTv.jsx
+        │   │   ├── Upcoming.css
+        │   │   ├── Upcoming.jsx
+        │   │   └── UpcomingIndian.jsx
+        │   │
+        │   └── Watchlist/
+        │       ├── Watchlist.css
+        │       └── Watchlist.jsx
+        │
+        └── context/                  # React Context API
+            ├── movieContext.js
+            └── MovieState.jsx
 ```
+
+## Key Observations
+
+1. **Backend** (`backend/`): Express.js server with MongoDB (Mongoose) for user authentication and watchlist management.
+
+2. **Frontend** (`movieLand-frontend/`): React + Vite application with feature-based component organization.
+
+3. **Routing**: The app uses `react-router-dom` for client-side routing with routes for movies, TV shows, Indian language movies, watchlist, and auth pages.
+
+4. **Dual Versions**: Several components have V2 versions (e.g., `Home.jsx` & `HomeV2.jsx`, `MoviesGlobal.jsx` & `MoviesGlobalV2.jsx`) suggesting UI redesigns or A/B testing.
+
+5. **Indian Regional Content**: Dedicated components for Hindi, Bengali, Tamil, Telugu, Kannada, and Malayalam movies.
+
+6. **TV Shows**: Separate routes and components for TV series with season and episode-level details.
+
+## File Count Summary
+
+| Category               | Count    |
+| ---------------------- | -------- |
+| Root Files             | 2        |
+| Backend Files          | 9        |
+| Frontend Config Files  | 6        |
+| Frontend Public Assets | 1        |
+| Frontend Source Files  | 95+      |
+| **Total**              | **113+** |
 
 ---
 
