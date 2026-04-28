@@ -1,5 +1,5 @@
 import React from "react";
-import "./Languagebar.css";
+import "./LanguageBar.css";
 import { Link, useNavigate } from "react-router-dom";
 
 function LanguageBar() {
