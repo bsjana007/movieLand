@@ -118,10 +118,16 @@ function MovieState(props) {
 	};
 
 	const trendingMovies = async () => {
-		const response = await fetch(`${host}/trending/movie/week`, options);
-		const data = await response.json();
-		setTrendingMovie(data.results);
-		// console.log(data.results);
+		try {
+			const response = await fetch(`${host}/trending/movie/week`, options);
+			if (!response.ok) {
+				throw new Error(`HTTP Error: ${response.status}`);
+			}
+			const data = await response.json();
+			setTrendingMovie(data.results);
+		} catch (error) {
+			console.error("Error Fetching Trending Movies:", error);
+		}
 	};
 
 	const trendingIndianMovies = async () => {
