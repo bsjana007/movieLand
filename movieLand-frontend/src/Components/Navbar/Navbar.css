@@ -92,9 +92,32 @@
 .nav-wish a {
 	text-decoration: none;
 	color: white;
-	font-size: 15px;
-	font-weight: 600;
 }
+
+.wishlist-btn {
+	background: none;
+	border: none;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem;
+	padding: 10px;
+	border-radius: 50%;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease;
+	outline: none;
+}
+
+.wishlist-btn:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: #3fedd9;
+	transform: scale(1.05);
+}
+
 .nav-login {
 	display: flex;
 	align-items: center;
@@ -243,7 +266,7 @@
 	align-items: center;
 	justify-content: space-between; /* 🔑 pushes poster to right */
 	padding: 10px 12px;
-	cursor:pointer;
+	cursor: pointer;
 }
 
 .search-item-row:hover {
@@ -279,4 +302,121 @@
 	height: 60px;
 	object-fit: cover;
 	border-radius: 4px;
+}
+
+/* User profile container and modal */
+.nav-user-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.user-icon-btn {
+	background: none;
+	border: none;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem;
+	padding: 10px;
+	border-radius: 50%;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease;
+	outline: none;
+}
+
+.user-icon-btn:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: #3fedd9;
+	transform: scale(1.05);
+}
+
+.user-profile-modal {
+	position: absolute;
+	right: 0;
+	top: calc(100% + 12px);
+	width: 260px;
+	background: rgba(30, 30, 30, 0.75);
+	backdrop-filter: blur(16px) saturate(180%);
+	-webkit-backdrop-filter: blur(16px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	padding: 18px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	z-index: 1100;
+	text-align: left;
+	animation: profileModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	transform-origin: top right;
+}
+
+.user-info-section {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.user-modal-name {
+	font-size: 15px;
+	font-weight: 600;
+	color: #ffffff;
+	margin: 0;
+}
+
+.user-modal-email {
+	font-size: 12px;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.6);
+	margin: 0;
+	word-break: break-all;
+}
+
+.modal-divider {
+	height: 1px;
+	background: rgba(255, 255, 255, 0.12);
+	margin: 12px 0;
+}
+
+.modal-logout-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	padding: 9px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	color: white;
+	background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.modal-logout-btn:hover {
+	opacity: 0.95;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(255, 75, 43, 0.3);
+}
+
+.modal-logout-btn:active {
+	transform: translateY(0);
+}
+
+@keyframes profileModalFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-8px) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
 }

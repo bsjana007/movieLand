@@ -3,6 +3,7 @@ import { body, validationResult } from "express-validator";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import auth from "../middleware/auth.js";
 // import dotenv from "dotenv";
 // import process from "process";
 // dotenv.config();
@@ -113,5 +114,17 @@ router.post(
 		}
 	},
 );
+
+// Route 3: Get logged-in User Details: GET "/api/auth/getuser". Login required
+router.get("/getuser", auth, async (req, res) => {
+	try {
+		const userId = req.userId;
+		const user = await User.findById(userId).select("-password");
+		res.status(200).json(user);
+	} catch (error) {
+		console.error("getuser error:", error.message);
+		res.status(500).send("Internal Server Error");
+	}
+});
 
 export default router;

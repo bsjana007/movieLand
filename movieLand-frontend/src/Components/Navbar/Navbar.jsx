@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/movieLand.png";
 import noMovie from "../../assets/no-movie.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import movieContext from "../../context/movieContext";
 // import logo from "../../assets/movie-light.png";
 
@@ -18,10 +18,50 @@ function Navbar() {
 	const searchRef = useRef(null);
 	const navigate = useNavigate();
 
+	const location = useLocation();
+	const [userProfile, setUserProfile] = useState(null);
+	const [userModalOpen, setUserModalOpen] = useState(false);
+	const userModalRef = useRef(null);
+	const userIconRef = useRef(null);
+
 	const handleLogout = () => {
 		localStorage.removeItem("token");
+		setUserProfile(null);
+		setUserModalOpen(false);
 		navigate("/login");
 	};
+
+	useEffect(() => {
+		setUserModalOpen(false);
+		const fetchUser = async () => {
+			const token = localStorage.getItem("token");
+			if (token) {
+				try {
+					const backendHost = import.meta.env.VITE_API_URL;
+					const response = await fetch(`${backendHost}/api/auth/getuser`, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					});
+					if (response.ok) {
+						const data = await response.json();
+						setUserProfile(data);
+					} else {
+						setUserProfile(null);
+						if (response.status === 401) {
+							localStorage.removeItem("token");
+						}
+					}
+				} catch (error) {
+					console.error("Error fetching user profile:", error);
+					setUserProfile(null);
+				}
+			} else {
+				setUserProfile(null);
+			}
+		};
+		fetchUser();
+	}, [location.pathname]);
 
 	//Debounce search
 	useEffect(() => {
@@ -73,11 +113,20 @@ function Navbar() {
 			if (searchRef.current && !searchRef.current.contains(e.target)) {
 				setSearchOpen(false);
 			}
+
+			if (
+				userModalRef.current &&
+				!userModalRef.current.contains(e.target) &&
+				userIconRef.current &&
+				!userIconRef.current.contains(e.target)
+			) {
+				setUserModalOpen(false);
+			}
 		}
 
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
-			document.addEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, []);
 
@@ -178,7 +227,11 @@ function Navbar() {
 						</button> */}
 						{/* search dropdown */}
 						{searchOpen && (
-							<div ref={searchRef} className="search-dropdown" data-lenis-prevent>
+							<div
+								ref={searchRef}
+								className="search-dropdown"
+								data-lenis-prevent
+							>
 								{results.length === 0 && (
 									<div className="search-empty">No Results</div>
 								)}
@@ -220,8 +273,8 @@ function Navbar() {
 						)}
 					</div>
 					<div className="nav-wish">
-						<Link to="watchlist">
-							<i className="fa-regular fa-heart fa-xl"></i>
+						<Link to="watchlist" className="wishlist-btn">
+							<i className="fa-regular fa-heart"></i>
 						</Link>
 					</div>
 					{!localStorage.getItem("token") ? (
@@ -234,15 +287,38 @@ function Navbar() {
 							</Link>
 						</div>
 					) : (
-						<div className="nav-login" onClick={() => navigate("/login")}>
-							<Link
-								onClick={handleLogout}
-								className="login-btn item-padding"
-								to={"/login"}
+						<div className="nav-user-container">
+							<button
+								ref={userIconRef}
+								className="user-icon-btn item-padding"
+								onClick={() => setUserModalOpen(!userModalOpen)}
+								aria-label="User Profile"
 							>
-								Logout{" "}
-								<i className="fa fa-sign-out" aria-hidden="true"></i>
-							</Link>
+								<i className="fa-regular fa-user"></i>
+							</button>
+							{userModalOpen && (
+								<div ref={userModalRef} className="user-profile-modal">
+									<div className="user-info-section">
+										<p className="user-modal-name">
+											{userProfile ? userProfile.name : "Loading..."}
+										</p>
+										<p className="user-modal-email">
+											{userProfile ? userProfile.email : ""}
+										</p>
+									</div>
+									<div className="modal-divider"></div>
+									<button
+										onClick={handleLogout}
+										className="modal-logout-btn"
+									>
+										Logout{" "}
+										<i
+											className="fa fa-sign-out"
+											aria-hidden="true"
+										></i>
+									</button>
+								</div>
+							)}
 						</div>
 					)}
 				</div>
