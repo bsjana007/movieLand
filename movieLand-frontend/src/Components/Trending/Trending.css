@@ -17,7 +17,7 @@
 	scroll-snap-align: center;
 	border-radius: 18px;
 	overflow: hidden;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+	/* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); */
 	background: #000;
 	cursor: pointer;
 	position: relative;
