@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./PersonDetails.css";
-import "../../components/MovieDetails/MovieDetails.css";
+import "../MovieDetails/MovieDetails.css";
 import { useParams, useNavigate } from "react-router-dom";
 import movieContext from "../../context/movieContext";
 import profileLogo from "../../assets/no-profile-pic.jpeg";
