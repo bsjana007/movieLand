@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./TopRated.css";
 import movieContext from "../../context/movieContext";
 import { useNavigate } from "react-router-dom";
+import noMovie from "../../assets/no-movie.png";
 
 function TopRated() {
 	const navigate = useNavigate();
@@ -25,7 +26,7 @@ function TopRated() {
 							src={
 								tv.poster_path
 									? `https://image.tmdb.org/t/p/w500${tv.poster_path}`
-									: "/no-image.png"
+									: noMovie
 							}
 							alt={tv.nmae}
 							loading="lazy"

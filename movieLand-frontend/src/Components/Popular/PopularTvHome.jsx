@@ -3,6 +3,8 @@ import "./PopularTvHome.css";
 import movieContext from "../../context/movieContext";
 import { useNavigate } from "react-router-dom";
 
+import noMovie from "../../assets/no-movie.png";
+
 function PopularTv() {
 	const { popularTvShows, fetchPopularTvShows } = useContext(movieContext);
 	const navigate = useNavigate();
@@ -24,7 +26,7 @@ function PopularTv() {
 								src={
 									tv.poster_path
 										? `https://image.tmdb.org/t/p/w500${tv.poster_path}`
-										: "/no-image.png"
+										: noMovie
 								}
 								alt={tv.name}
 								loading="lazy"

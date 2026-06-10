@@ -33,6 +33,8 @@ import SeasonDetails from "./Components/MovieDetails/SeasonDetails";
 import EpisodeDetails from "./Components/MovieDetails/EpisodeDetails";
 import { useEffect } from "react";
 import SessionHandler from "./Components/SessionExpiredModal/SessionHandler";
+import PersonDetails from "./Components/PersonDetails/PersonDetails";
+import GenreMovies from "./Components/GenreMovies/GenreMovies";
 // import AuthSuccess from "./Components/Pages/AuthSuccess";
 
 function App() {
@@ -82,6 +84,7 @@ function App() {
 						{/* <Route exact path="/indian" element={<IndianMovies />} */}
 
 						<Route exact path="/movie/:id" element={<MovieDetails />} />
+						<Route exact path="/person/:id" element={<PersonDetails />} />
 						<Route exact path="/tv/:id" element={<TvDetails />} />
 						<Route
 							exact
@@ -94,6 +97,8 @@ function App() {
 							element={<EpisodeDetails />}
 						/>
 						<Route exact path="/watchlist" element={<Watchlist />} />
+						<Route exact path="/genres" element={<GenreMovies />} />
+						<Route exact path="/genres/:genreId" element={<GenreMovies />} />
 						<Route element={<IndianMovies />}>
 							<Route
 								exact

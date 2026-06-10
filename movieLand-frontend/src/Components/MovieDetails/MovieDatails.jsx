@@ -9,6 +9,17 @@ import Loading from "../Loader/Loading";
 function MovieDetails() {
 	const navigate = useNavigate();
 	const [reviewIndex, setReviewIndex] = useState(0);
+	const [activeReview, setActiveReview] = useState(null);
+
+	const getAvatarUrl = (avatarPath) => {
+		if (!avatarPath) return null;
+		if (avatarPath.startsWith("/http") || avatarPath.startsWith("http")) {
+			return avatarPath.startsWith("/")
+				? avatarPath.substring(1)
+				: avatarPath;
+		}
+		return `https://image.tmdb.org/t/p/w150_and_h150_face${avatarPath}`;
+	};
 	const [openSimilar, setOpenSimilar] = useState(true);
 	const [openRecommended, setOpenRecommended] = useState(true);
 	// const [isWatchlisted, setiIWatchlisted] = useState(false);
@@ -65,6 +76,17 @@ function MovieDetails() {
 		fetchWatchlist();
 		//eslint-disable-next-line
 	}, [id]);
+
+	useEffect(() => {
+		if (activeReview) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "";
+		}
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [activeReview]);
 
 	const isWatchlisted =
 		movieDetails &&
@@ -182,11 +204,15 @@ function MovieDetails() {
 						<div className="genres-section">
 							<div className="center">
 								<div className="bar"></div>
-								<h2>Genres</h2>
+								<div className="bar-text">Genres</div>
 							</div>
 							<div className="genres-list">
 								{movieDetails.genres?.map((genre) => (
-									<div className="card-flex" key={genre.id}>
+									<div
+										className="card-flex"
+										key={genre.id}
+										onClick={() => navigate(`/genres/${genre.id}`)}
+									>
 										<div className="genre-card">
 											<p>{genre.name}</p>
 										</div>
@@ -200,12 +226,16 @@ function MovieDetails() {
 				<div className="cast-section">
 					<div className="center">
 						<div className="bar"></div>
-						<h2>Cast</h2>
+						<div className="bar-text">Cast</div>
 					</div>
 
 					<div className="movie-credits-wrapper">
 						{movieCast.map((actor) => (
-							<div className="movie-credits" key={actor.id}>
+							<div
+								className="movie-credits"
+								key={actor.id}
+								onClick={() => navigate(`/person/${actor.id}`)}
+							>
 								<img
 									src={
 										actor.profile_path
@@ -225,7 +255,7 @@ function MovieDetails() {
 				<div className="crew-section">
 					<div className="center">
 						<div className="bar"></div>
-						<h2>Crew</h2>
+						<div className="bar-text">Crew</div>
 					</div>
 					<div className="movie-credits-wrapper">
 						{movieCrew
@@ -236,7 +266,11 @@ function MovieDetails() {
 									member.job === "Producer",
 							)
 							.map((member) => (
-								<div className="movie-credits" key={member.id}>
+								<div
+									className="movie-credits"
+									key={member.id}
+									onClick={() => navigate(`/person/${member.id}`)}
+								>
 									<img
 										src={
 											member.profile_path
@@ -257,7 +291,7 @@ function MovieDetails() {
 					<div className="photos-header">
 						<div className="center">
 							<div className="bar"></div>
-							<h2>Photos</h2>
+							<div className="bar-text">Photos</div>
 							<span>{movieImages.length}</span>
 						</div>
 					</div>
@@ -279,147 +313,244 @@ function MovieDetails() {
 						<h2 className="review-heading">Featured reviews</h2>
 					</div>
 
-					<div className="review-wrapper">
-						{/* PREVIOUS BUTTON */}
-						<button
-							className="review-nav left"
-							onClick={() => setReviewIndex((prev) => prev - 2)}
-							disabled={reviewIndex === 0}
+					{movieReviews && movieReviews.length > 0 ? (
+						<div className="review-wrapper">
+							{/* PREVIOUS BUTTON */}
+							<button
+								className="review-nav left"
+								onClick={() => setReviewIndex((prev) => prev - 2)}
+								disabled={reviewIndex === 0}
+							>
+								‹
+							</button>
+
+							{/* REVIEW CARDS */}
+							<div className="review-cards">
+								{movieReviews
+									.slice(reviewIndex, reviewIndex + 2)
+									.map((review) => {
+										const content = review.content || "";
+										const title = content.split(".")[0];
+										const avatarUrl = getAvatarUrl(
+											review.author_details?.avatar_path,
+										);
+
+										return (
+											<div className="review-card" key={review.id}>
+												<div className="review-header">
+													<div className="review-author-info">
+														{avatarUrl ? (
+															<img
+																src={avatarUrl}
+																alt={review.author}
+																className="review-avatar"
+															/>
+														) : (
+															<div className="review-avatar-fallback">
+																{review.author
+																	?.charAt(0)
+																	.toUpperCase() || "?"}
+															</div>
+														)}
+														<div className="review-author-details">
+															<span className="review-author-name">
+																{review.author}
+															</span>
+															{review.author_details?.rating && (
+																<span className="review-rating-badge">
+																	⭐{" "}
+																	{
+																		review.author_details
+																			.rating
+																	}
+																	/10
+																</span>
+															)}
+														</div>
+													</div>
+												</div>
+
+												<h3>{title}</h3>
+
+												<p className="review-text">
+													{content.length > 180
+														? content.slice(0, 180) + "..."
+														: content}
+												</p>
+												{content.length > 180 && (
+													<button
+														className="read-more-btn"
+														onClick={() =>
+															setActiveReview(review)
+														}
+													>
+														Read More
+													</button>
+												)}
+											</div>
+										);
+									})}
+							</div>
+
+							{/* NEXT BUTTON */}
+							<button
+								className="review-nav right"
+								onClick={() => setReviewIndex((prev) => prev + 2)}
+								disabled={reviewIndex + 2 >= movieReviews.length}
+							>
+								›
+							</button>
+						</div>
+					) : (
+						<div className="no-reviews-state">
+							<i className="fa-regular fa-comments"></i>
+							<p>
+								No reviews available yet. Be the first to share your
+								thoughts!
+							</p>
+						</div>
+					)}
+				</div>
+
+				<div className="global-content-sections">
+					{/* similar movies */}
+					<div className="global-section-container">
+						<div
+							className={`global-section-header ${openSimilar ? "open" : ""}`}
+							onClick={toggleSimilarOpen}
 						>
-							‹
-						</button>
-
-						{/* REVIEW CARDS */}
-						<div className="review-cards">
-							{movieReviews
-								.slice(reviewIndex, reviewIndex + 2)
-								.map((review) => {
-									const content = review.content || "";
-									const title = content.split(".")[0];
-
-									return (
-										<div className="review-card" key={review.id}>
-											<div className="review-rating">
-												⭐ {review.author_details?.rating ?? "–"}
-												<span className="review-author">
-													{review.author}
+							<div className="global-section-title-wrap">
+								<h2>Similar to your choice</h2>
+							</div>
+							<i
+								className={`fa-solid fa-chevron-down global-toggle-icon ${openSimilar ? "rotated" : ""}`}
+							></i>
+						</div>
+						<div
+							className={`global-section-content ${openSimilar ? "expanded" : ""}`}
+						>
+							{similarMovies && similarMovies.length !== 0 ? (
+								<section className="similar-wrapper">
+									{similarMovies.map((movie) => (
+										<div
+											className="movie-card"
+											key={movie.id}
+											onClick={() => navigate(`/movie/${movie.id}`)}
+										>
+											<div className="poster-wrapper">
+												<img
+													src={
+														movie.poster_path
+															? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+															: noMovie
+													}
+													alt={movie.title}
+													loading="lazy"
+												/>
+												<span className="rating-badge">
+													⭐ {movie.vote_average.toFixed(1)}
 												</span>
 											</div>
-
-											<h3>{title}</h3>
-
-											<p>
-												{content.length > 160
-													? content.slice(0, 160) + "..."
-													: content}
-											</p>
+											<div className="movie-content">
+												<h4 className="movie-title">
+													{movie.title}
+												</h4>
+												<p className="release-date">
+													Release: {movie.release_date}
+												</p>
+											</div>
 										</div>
-									);
-								})}
+									))}
+								</section>
+							) : (
+								<div className="error">
+									<div className="error-emoji">
+										<svg
+											viewBox="0 0 48 48"
+											className="sad-icon"
+											style={{ fill: "currentColor" }}
+										>
+											<path d="M24,1A23,23,0,1,0,47,24,23,23,0,0,0,24,1Zm0,44A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm8.8-12.6a1,1,0,0,1-.2,1.4,1,1,0,0,1-.6.2,1,1,0,0,1-.8-.4A9.42,9.42,0,0,0,24,30a9.44,9.44,0,0,0-7.2,3.6,1,1,0,0,1-1.6-1.2A11.34,11.34,0,0,1,24,28,11.31,11.31,0,0,1,32.8,32.4ZM15,19a2,2,0,1,1,2,2A2,2,0,0,1,15,19Zm18,0a2,2,0,1,1-2-2A2,2,0,0,1,33,19Z" />
+										</svg>
+									</div>
+									<div className="error-text">
+										<p className="text">
+											No Similar Movies Available
+										</p>
+									</div>
+								</div>
+							)}
 						</div>
+					</div>
 
-						{/* NEXT BUTTON */}
-						<button
-							className="review-nav right"
-							onClick={() => setReviewIndex((prev) => prev + 2)}
-							disabled={reviewIndex + 2 >= movieReviews.length}
+					{/* rocommended movies */}
+					<div className="global-section-container">
+						<div
+							className={`global-section-header ${openRecommended ? "open" : ""}`}
+							onClick={toggleRecommended}
 						>
-							›
-						</button>
-					</div>
-				</div>
-				{/* similar movies */}
-				<div className="similar-movie-outer">
-					<button
-						className={`toggle-btn ${openSimilar ? "open" : ""}`}
-						onClick={toggleSimilarOpen}
-					>
-						<i
-							className={`arrow fa-solid fa-angle-up ${
-								openSimilar ? "open" : ""
-							}`}
-						></i>
-						<span>Similar to your choice</span>
-					</button>
-					{/* <h2>Similar to your choice</h2> */}
-
-					<div className={`dropdown ${openSimilar ? "open" : ""}`}>
-						<section className="similar-wrapper">
-							{similarMovies.map((movie) => (
-								<div
-									className="movie-card"
-									key={movie.id}
-									onClick={() => navigate(`/movie/${movie.id}`)}
-								>
-									<div className="poster-wrapper">
-										<img
-											src={
-												movie.poster_path
-													? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-													: noMovie
-											}
-											alt={movie.title}
-											loading="lazy"
-										/>
-										<span className="rating-badge">
-											⭐ {movie.vote_average.toFixed(1)}
-										</span>
+							<div className="global-section-title-wrap">
+								<h2>Recommended Movies</h2>
+							</div>
+							<i
+								className={`fa-solid fa-chevron-down global-toggle-icon ${openRecommended ? "rotated" : ""}`}
+							></i>
+						</div>
+						<div
+							className={`global-section-content ${openRecommended ? "expanded" : ""}`}
+						>
+							{recommended && recommended.length !== 0 ? (
+								<section className="recommended-wrapper">
+									{recommended.map((movie) => (
+										<div
+											className="movie-card"
+											key={movie.id}
+											onClick={() => navigate(`/movie/${movie.id}`)}
+										>
+											<div className="poster-wrapper">
+												<img
+													src={
+														movie.poster_path
+															? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+															: noMovie
+													}
+													alt={movie.title}
+													loading="lazy"
+												/>
+												<span className="rating-badge">
+													⭐ {movie.vote_average.toFixed(1)}
+												</span>
+											</div>
+											<div className="movie-content">
+												<h4 className="movie-title">
+													{movie.title}
+												</h4>
+												<p className="release-date">
+													Release: {movie.release_date}
+												</p>
+											</div>
+										</div>
+									))}
+								</section>
+							) : (
+								<div className="error">
+									<div className="error-emoji">
+										<svg
+											viewBox="0 0 48 48"
+											className="sad-icon"
+											style={{ fill: "currentColor" }}
+										>
+											<path d="M24,1A23,23,0,1,0,47,24,23,23,0,0,0,24,1Zm0,44A21,21,0,1,1,45,24,21,21,0,0,1,24,45Zm8.8-12.6a1,1,0,0,1-.2,1.4,1,1,0,0,1-.6.2,1,1,0,0,1-.8-.4A9.42,9.42,0,0,0,24,30a9.44,9.44,0,0,0-7.2,3.6,1,1,0,0,1-1.6-1.2A11.34,11.34,0,0,1,24,28,11.31,11.31,0,0,1,32.8,32.4ZM15,19a2,2,0,1,1,2,2A2,2,0,0,1,15,19Zm18,0a2,2,0,1,1-2-2A2,2,0,0,1,33,19Z" />
+										</svg>
 									</div>
-									<div className="movie-content">
-										<h4 className="movie-title">{movie.title}</h4>
-										<p className="release-date">
-											Release: {movie.release_date}
+									<div className="error-text">
+										<p className="text">
+											No Recommended Movies Available
 										</p>
 									</div>
 								</div>
-							))}
-						</section>
-					</div>
-				</div>
-				{/* rocommended movies */}
-				<div className="recommended-movie-outer">
-					<button
-						className={`toggle-btn ${openRecommended ? "open" : ""}`}
-						onClick={toggleRecommended}
-					>
-						<i
-							className={`arrow fa-solid fa-angle-up ${
-								openSimilar ? "open" : ""
-							}`}
-						></i>
-						<span>Recommended Movies</span>
-					</button>
-					<div className={`dropdown ${openRecommended ? "open" : ""}`}>
-						<section className="recommended-wrapper">
-							{recommended.map((movie) => (
-								<div
-									className="movie-card"
-									key={movie.id}
-									onClick={() => navigate(`/movie/${movie.id}`)}
-								>
-									<div className="poster-wrapper">
-										<img
-											src={
-												movie.poster_path
-													? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-													: noMovie
-											}
-											alt={movie.title}
-											loading="lazy"
-										/>
-										<span className="rating-badge">
-											⭐ {movie.vote_average.toFixed(1)}
-										</span>
-									</div>
-									<div className="movie-content">
-										<h4 className="movie-title">{movie.title}</h4>
-										<p className="release-date">
-											Release: {movie.release_date}
-										</p>
-									</div>
-								</div>
-							))}
-						</section>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -445,6 +576,55 @@ function MovieDetails() {
 							allow="encrypted-media; picture-in-picture"
 							allowFullScreen
 						/>
+					</div>
+				</div>
+			)}
+
+			{activeReview && (
+				<div
+					className="review-modal-overlay"
+					onClick={() => setActiveReview(null)}
+					data-lenis-prevent
+				>
+					<div
+						className="review-modal-content"
+						onClick={(e) => e.stopPropagation()}
+						data-lenis-prevent
+					>
+						<button
+							className="review-modal-close"
+							onClick={() => setActiveReview(null)}
+						>
+							✕
+						</button>
+
+						<div className="review-modal-header">
+							{getAvatarUrl(activeReview.author_details?.avatar_path) ? (
+								<img
+									src={getAvatarUrl(
+										activeReview.author_details.avatar_path,
+									)}
+									alt={activeReview.author}
+									className="review-modal-avatar"
+								/>
+							) : (
+								<div className="review-modal-avatar-fallback">
+									{activeReview.author?.charAt(0).toUpperCase() || "?"}
+								</div>
+							)}
+							<div className="review-modal-author-info">
+								<h2>{activeReview.author}</h2>
+								{activeReview.author_details?.rating && (
+									<span className="review-modal-rating">
+										⭐ {activeReview.author_details.rating}/10
+									</span>
+								)}
+							</div>
+						</div>
+
+						<div className="review-modal-body" data-lenis-prevent>
+							<p>{activeReview.content}</p>
+						</div>
 					</div>
 				</div>
 			)}

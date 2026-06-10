@@ -8,6 +8,7 @@ function TrendingTv() {
 	const { trendingTvShows, fetchTrendingTvShows } = useContext(movieContext);
 	const bannerRef = useRef(null);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [isHovered, setISHovered] = useState(false);
 
 	useEffect(() => {
 		fetchTrendingTvShows();
@@ -16,31 +17,38 @@ function TrendingTv() {
 
 	// Auto-scroll functionality
 	useEffect(() => {
+		if (isHovered) return; //if hovered then pause slider
 		const interval = setInterval(() => {
 			if (bannerRef.current) {
 				const { scrollLeft, scrollWidth, clientWidth } = bannerRef.current;
 				const isEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
-				
+
 				if (isEnd) {
-					bannerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+					bannerRef.current.scrollTo({ left: 0 });
 				} else {
-					bannerRef.current.scrollBy({ left: clientWidth, behavior: "smooth" });
+					bannerRef.current.scrollBy({ left: clientWidth });
 				}
 			}
 		}, 4000);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, [isHovered]);
 
 	// Detect scroll & update dot
 	const handleScroll = () => {
 		const container = bannerRef.current;
+		if (!container) return;
+
 		const scrollLeft = container.scrollLeft;
 		const width = container.offsetWidth;
-
 		const index = Math.round(scrollLeft / width);
 
-		setActiveIndex(index);
+		setActiveIndex((prevIndex) => {
+			if (prevIndex !== index) {
+				return index;
+			}
+			return prevIndex;
+		});
 	};
 
 	return (
@@ -49,6 +57,8 @@ function TrendingTv() {
 				className="banner-wrapper"
 				ref={bannerRef}
 				onScroll={handleScroll}
+				onMouseEnter={() => setISHovered(true)}
+				onMouseLeave={() => setISHovered(false)}
 			>
 				{trendingTvShows.map((tv) => (
 					<div
@@ -60,8 +70,8 @@ function TrendingTv() {
 							<img
 								src={
 									tv.backdrop_path
-										? `https://image.tmdb.org/t/p/original${tv.backdrop_path}`
-										: `https://image.tmdb.org/t/p/original${tv.poster_path}`
+										? `https://image.tmdb.org/t/p/w1280${tv.backdrop_path}`
+										: `https://image.tmdb.org/t/p/w1280${tv.poster_path}`
 								}
 								alt={tv.title}
 								loading="lazy"

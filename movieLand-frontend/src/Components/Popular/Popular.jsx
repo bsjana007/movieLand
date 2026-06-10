@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./Popular.css";
 import { useNavigate } from "react-router-dom";
 import movieContext from "../../context/movieContext";
+import noMovie from "../../assets/no-movie.png";
 
 function Popular() {
 	const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Popular() {
 								src={
 									movie.poster_path
 										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: "/no-image.png"
+										: noMovie
 								}
 								alt={movie.title}
 								loading="lazy"

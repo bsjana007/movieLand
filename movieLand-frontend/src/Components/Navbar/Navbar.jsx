@@ -24,6 +24,13 @@ function Navbar() {
 	const userModalRef = useRef(null);
 	const userIconRef = useRef(null);
 
+	// Close the user modal synchronously during render when navigation occurs
+	const [prevPath, setPrevPath] = useState(location.pathname);
+	if (location.pathname !== prevPath) {
+		setPrevPath(location.pathname);
+		setUserModalOpen(false);
+	}
+
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		setUserProfile(null);
@@ -32,7 +39,6 @@ function Navbar() {
 	};
 
 	useEffect(() => {
-		setUserModalOpen(false);
 		const fetchUser = async () => {
 			const token = localStorage.getItem("token");
 			if (token) {
@@ -100,6 +106,8 @@ function Navbar() {
 			navigate(`/movie/${item.id}`);
 		} else if (item.media_type === "tv") {
 			navigate(`/tv/${item.id}`);
+		} else if (item.media_type === "person") {
+			navigate(`/person/${item.id}`);
 		}
 	};
 
@@ -175,9 +183,15 @@ function Navbar() {
 											Indian
 										</Link>
 									</li>
-									{/* <li>
-										<Link to="/movies/upcoming">Upcoming</Link>
-									</li> */}
+									<div className="divider"></div>
+									<li>
+										<Link
+											to="/genres"
+											onClick={handleMoviesClick}
+										>
+											Genres
+										</Link>
+									</li>
 								</ul>
 							</li>
 							<li

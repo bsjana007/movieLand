@@ -9,6 +9,7 @@ function Trending() {
 		useContext(movieContext);
 	const bannerRef = useRef(null);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [isHovered, setISHovered] = useState(false); // track hover to pause slider
 
 	useEffect(() => {
 		trendingIndianMovies();
@@ -17,31 +18,39 @@ function Trending() {
 
 	// Auto-scroll functionality
 	useEffect(() => {
+		if (isHovered) return; //if hoverd then pause slider
 		const interval = setInterval(() => {
 			if (bannerRef.current) {
 				const { scrollLeft, scrollWidth, clientWidth } = bannerRef.current;
 				const isEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
-				
+
 				if (isEnd) {
-					bannerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+					bannerRef.current.scrollTo({ left: 0 });
 				} else {
-					bannerRef.current.scrollBy({ left: clientWidth, behavior: "smooth" });
+					bannerRef.current.scrollBy({ left: clientWidth });
 				}
 			}
 		}, 4000);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, [isHovered]);
 
 	// Detect scroll & update dot
 	const handleScroll = () => {
 		const container = bannerRef.current;
+		if (!container) return;
+
 		const scrollLeft = container.scrollLeft;
 		const width = container.offsetWidth;
 
 		const index = Math.round(scrollLeft / width);
 
-		setActiveIndex(index);
+		setActiveIndex((prevIndex) => {
+			if (prevIndex !== index) {
+				return index;
+			}
+			return prevIndex;
+		});
 	};
 
 	return (
@@ -50,6 +59,8 @@ function Trending() {
 				className="banner-wrapper"
 				ref={bannerRef}
 				onScroll={handleScroll}
+				onMouseEnter={() => setISHovered(true)}
+				onMouseLeave={() => setISHovered(false)}
 			>
 				{trendingIndianMovie.map((movie) => (
 					<div
@@ -61,8 +72,8 @@ function Trending() {
 							<img
 								src={
 									movie.backdrop_path
-										? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-										: `https://image.tmdb.org/t/p/original${movie.poster_path}`
+										? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
+										: `https://image.tmdb.org/t/p/w1280${movie.poster_path}`
 								}
 								alt={movie.title}
 								loading="lazy"

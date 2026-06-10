@@ -130,3 +130,25 @@
 .trash-btn i {
 	color: white;
 }
+
+.error {
+	margin-top: 50px;
+	width: 1450px;
+	height: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.sad-icon {
+	color: #a1a1a1;
+	height: 80px;
+	width: 80px;
+}
+
+.text {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 1.5rem;
+	font-family: "Poppins", sans-serif;
+}

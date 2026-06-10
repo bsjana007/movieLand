@@ -66,6 +66,17 @@ function MovieState(props) {
 	const [seasonVideos, setSeasonVideos] = useState(moviesInitial);
 	const [episodeVideos, setEpisodeVideos] = useState(moviesInitial);
 	const [isSessionExpired, setSessionExpired] = useState(false);
+	const [personDetails, setPersonDetails] = useState(moviesInitial);
+	const [totalCredits, setTotalCredits] = useState(moviesInitial);
+	const [personMovieCredits, setPersonMovieCredits] = useState(moviesInitial);
+	const [personTVCredits, setPersonTVCredits] = useState(moviesInitial);
+
+	const [movieGenres, setMovieGenres] = useState([]);
+	const [genreMovies, setGenreMovies] = useState([]);
+	const [genrePage, setGenrePage] = useState(1);
+	const [genreTotalPages, setGenreTotalPages] = useState(1);
+	const [loadingGenres, setLoadingGenres] = useState(false);
+	const [loadingGenreMovies, setLoadingGenreMovies] = useState(false);
 
 	const checkJwtError = async (response) => {
 		if (response.status === 401) {
@@ -586,6 +597,80 @@ function MovieState(props) {
 		return data.results || [];
 	};
 
+	const fetchPersonDetails = async (id) => {
+		const response = await fetch(`${host}/person/${id}`, options);
+		const data = await response.json();
+		setPersonDetails(data);
+		// console.log(data);
+	};
+
+	const fetchTotalCredits = async (id) => {
+		const response = await fetch(
+			`${host}/person/${id}/combined_credits`,
+			options,
+		);
+		const data = await response.json();
+		const sumTotalCredits = data.cast.length + data.crew.length;
+		setTotalCredits(sumTotalCredits);
+		// console.log(sumTotalCredits);
+	};
+
+	const fetchPersonMovieCredits = async (id) => {
+		const response = await fetch(
+			`${host}/person/${id}/movie_credits`,
+			options,
+		);
+		const data = await response.json();
+		setPersonMovieCredits(data);
+		console.log(data);
+	};
+
+	const fetchPersonTVCredits = async (id) => {
+		const response = await fetch(`${host}/person/${id}/tv_credits`, options);
+		const data = await response.json();
+		setPersonTVCredits(data);
+		// console.log(data);
+	};
+
+	const fetchMovieGenres = async () => {
+		try {
+			setLoadingGenres(true);
+			const response = await fetch(`${host}/genre/movie/list?language=en`, options);
+			const data = await response.json();
+			setMovieGenres(data.genres || []);
+			return data.genres || [];
+		} catch (error) {
+			console.error("Error fetching genres:", error);
+			return [];
+		} finally {
+			setLoadingGenres(false);
+		}
+	};
+
+	const fetchMoviesByGenre = async (id, pageNum, append = false) => {
+		if (!id) return;
+		try {
+			setLoadingGenreMovies(true);
+			const response = await fetch(
+				`${host}/discover/movie?with_genres=${id}&sort_by=popularity.desc&page=${pageNum}`,
+				options
+			);
+			const data = await response.json();
+
+			if (append) {
+				setGenreMovies((prev) => [...prev, ...data.results]);
+			} else {
+				setGenreMovies(data.results || []);
+			}
+			setGenreTotalPages(data.total_pages || 1);
+			setGenrePage(pageNum);
+		} catch (error) {
+			console.error("Error fetching movies by genre:", error);
+		} finally {
+			setLoadingGenreMovies(false);
+		}
+	};
+
 	return (
 		<MovieContext.Provider
 			value={{
@@ -637,6 +722,10 @@ function MovieState(props) {
 				episodeDetails,
 				seasonVideos,
 				episodeVideos,
+				personDetails,
+				totalCredits,
+				personMovieCredits,
+				personTVCredits,
 				popularMovies,
 				topRatedMovies,
 				upcomingMovies,
@@ -681,6 +770,18 @@ function MovieState(props) {
 				fetchEpisodeDetails,
 				fetchSeasonVideos,
 				fetchEpisodeVideos,
+				fetchPersonDetails,
+				fetchTotalCredits,
+				fetchPersonMovieCredits,
+				fetchPersonTVCredits,
+				movieGenres,
+				genreMovies,
+				genrePage,
+				genreTotalPages,
+				loadingGenres,
+				loadingGenreMovies,
+				fetchMovieGenres,
+				fetchMoviesByGenre,
 			}}
 		>
 			{props.children}
