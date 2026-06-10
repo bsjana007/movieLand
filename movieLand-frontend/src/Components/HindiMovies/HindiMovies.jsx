@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import "./HindiMovies.css";
 import movieContext from "../../context/movieContext";
 import { useNavigate } from "react-router-dom";
+import noMovie from "../../assets/no-movie.png";
 
 function HindiMovies() {
 	const navigate = useNavigate();
@@ -31,7 +32,7 @@ function HindiMovies() {
 								src={
 									movie.poster_path
 										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: "/no-image.png"
+										: noMovie
 								}
 								alt={movie.title}
 								loading="lazy"
@@ -53,7 +54,7 @@ function HindiMovies() {
 					</div>
 				))}
 
-				{/* 🔥 SEE MORE CARD */}
+				{/* SEE MORE CARD */}
 				{!loading && page < totalPages && (
 					<div
 						className="movie-card see-more-card"
@@ -66,7 +67,7 @@ function HindiMovies() {
 					</div>
 				)}
 
-				{/* 🔥 SKELETON CARDS (shown while loading) */}
+				{/* SKELETON CARDS (shown while loading) */}
 				{loading &&
 					Array.from({ length: 8 }).map((_, index) => (
 						<div

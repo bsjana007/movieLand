@@ -84,15 +84,17 @@ router.post(
 		try {
 			const user = await User.findOne({ email });
 			if (!user) {
-				res.status(400).json({
-					error: "Please try to login with coorect Credentials",
+				return res.status(400).json({
+					field: "email",
+					error: "The login email you entered is incorrect.",
 				});
 			}
 			const passwordCompare = await bcrypt.compare(password, user.password);
 			if (!passwordCompare) {
-				return res
-					.status(400)
-					.json({ error: "Please try to login with coorect Credentials" });
+				return res.status(400).json({
+					field: "password",
+					error: "The login password you entered is incorrect.",
+				});
 			}
 			const data = {
 				user: {

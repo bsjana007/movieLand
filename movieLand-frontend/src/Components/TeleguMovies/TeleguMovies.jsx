@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import "./TeleguMovies.css";
 import { useNavigate } from "react-router-dom";
 import movieContext from "../../context/movieContext";
+import noMovie from "../../assets/no-movie.png";
 
 function TeleguMovies() {
 	const navigate = useNavigate();
@@ -29,7 +30,7 @@ function TeleguMovies() {
 								src={
 									movie.poster_path
 										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: "/no-image.png"
+										: noMovie
 								}
 								alt={movie.title}
 								loading="lazy"

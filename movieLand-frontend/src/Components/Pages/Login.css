@@ -59,7 +59,9 @@
 	height: 50.5px;
 	background: rgba(255, 255, 255, 0.05);
 	border-radius: 5px;
-	/* padding: 2px; */
+	/* padding: 2px; 
+	
+	*/
 }
 
 .login-input {
@@ -74,6 +76,23 @@
 	font-size: 15px;
 }
 .login-input:focus {
+	border: none;
+	outline: none;
+}
+
+.login-input-spceial {
+	margin: 4px;
+	width: 509px;
+	height: 100%;
+	padding: 5px;
+	background: none;
+	border: none;
+	border-radius: 12px;
+	color: white;
+	font-size: 15px;
+}
+
+.login-input-spceial:focus {
 	border: none;
 	outline: none;
 }
@@ -156,4 +175,13 @@
 	text-align: center;
 	font-size: 14px;
 	color: rgba(255, 255, 255, 0.7);
+}
+
+.field-error {
+	color: #f63049;
+	font-size: 12px;
+	margin-top: 4px;
+	display: block;
+	font-family: "Poppins", sans-serif;
+	text-align: left;
 }

@@ -6,25 +6,42 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
 	const backendHost = `${import.meta.env.VITE_API_URL}`;
 	const [credentials, setCredentials] = useState({ email: "", password: "" });
+	const [emailError, setEmailError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
 	const navigate = useNavigate();
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const response = await fetch(`${backendHost}/api/auth/login`, {
-			method: "POST",
-			headers: {
-				"content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: credentials.email,
-				password: credentials.password,
-			}),
-		});
-		const data = await response.json();
-		if (data.token) {
-			localStorage.setItem("token", data.token);
-			navigate("/");
-			return true;
-		} else {
+
+		setEmailError("");
+		setPasswordError("");
+		try {
+			const response = await fetch(`${backendHost}/api/auth/login`, {
+				method: "POST",
+				headers: {
+					"content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: credentials.email,
+					password: credentials.password,
+				}),
+			});
+			const data = await response.json();
+			if (response.ok && data.token) {
+				localStorage.setItem("token", data.token);
+				navigate("/");
+				return true;
+			} else {
+				if (data.field === "email") {
+					setEmailError(data.error);
+				} else if (data.field === "password") {
+					setPasswordError(data.error);
+				}
+				return false;
+			}
+			//eslint-disable-next-line
+		} catch (error) {
+			setPasswordError("Server connection error");
 			return false;
 		}
 	};
@@ -71,6 +88,9 @@ function Login() {
 										autoComplete="off"
 									/>
 								</div>
+								{emailError && (
+									<span className="field-error">{emailError}</span>
+								)}
 								<div className="input-border"></div>
 							</div>
 							<div className="form-element">
@@ -78,10 +98,34 @@ function Login() {
 									Password
 								</label>
 								<div className="input-wrapper">
-									<i
-										className=" icon-margin fa-solid fa-lock fa-xl"
-										style={{ color: "#a1a1a1" }}
-									></i>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										className="lucide lucide-lock"
+										style={{
+											position: "absolute",
+											left: "7px",
+											color: "rgba(255, 255, 255, 0.5)",
+											pointerEvents: "none",
+										}}
+									>
+										<rect
+											width="18"
+											height="11"
+											x="3"
+											y="11"
+											rx="2"
+											ry="2"
+										></rect>
+										<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+									</svg>
 									<input
 										value={credentials.password}
 										onChange={onChange}
@@ -89,10 +133,13 @@ function Login() {
 										required
 										type="password"
 										id="password"
-										className="login-input"
+										className="login-input-spceial"
 										name="password"
 									/>
 								</div>
+								{passwordError && (
+									<span className="field-error">{passwordError}</span>
+								)}
 								<div className="input-border"></div>
 							</div>
 							<div className="form-element">

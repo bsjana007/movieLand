@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import "./MalayalamMovies.css";
 import movieContext from "../../context/movieContext";
 import { useNavigate } from "react-router-dom";
+import noMovie from "../../assets/no-movie.png";
 
 function MalayalamMovies() {
 	const navigate = useNavigate();
@@ -31,7 +32,7 @@ function MalayalamMovies() {
 								src={
 									movie.poster_path
 										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: "/no-image.png"
+										: noMovie
 								}
 								alt={movie.title}
 								loading="lazy"

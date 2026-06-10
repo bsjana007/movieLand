@@ -1,0 +1,176 @@
+.outer-section {
+	padding: 40px;
+	color: white;
+	background: linear-gradient(180deg, #242424, #134e5e);
+	display: flex;
+	justify-content: center;
+}
+
+.outside-wrapper {
+	max-width: 1340px;
+}
+
+.title-section {
+	/* max-width: 1200px; */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.title-section .title-header {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font-size: inherit;
+	font-weight: inherit;
+	letter-spacing: inherit;
+}
+
+.person-name {
+	font-family: "Poppins";
+	font-weight: 600;
+	font-size: 30px;
+	margin: 0;
+}
+
+.profession-span {
+	font-family: "Poppins";
+	font-size: 16px;
+	color: #d1cccc;
+}
+
+.person-img {
+	width: 300px;
+	border-radius: 14px;
+}
+
+.img-biography-section {
+	margin-top: 20px;
+	display: flex;
+	gap: 30px;
+	align-items: center;
+}
+
+.biography {
+	font-family: "Poppins";
+	/* line-height: 30px; */
+	font-size: 15px;
+	color: rgb(216, 209, 209);
+}
+
+.rating-content .content {
+	margin: 0;
+	font-family: "Poppins";
+	font-weight: 600;
+	font-size: 15px;
+	color: #a1a1a1;
+	letter-spacing: 6px;
+}
+
+.imdb-rating {
+	display: inline-flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.rating-label {
+	margin: 0;
+}
+
+.other-details {
+	margin-top: 20px;
+}
+
+.bar-overview-section {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.bar {
+	height: 30px;
+	width: 5px;
+	border: none;
+	background-color: yellow;
+	padding: 0px;
+	margin: 0;
+	border-radius: 2px;
+	/* margin-top: -5px; */
+}
+
+.overview-section {
+	margin: 0;
+	padding: 5px;
+	border: none;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+	font-size: 1.5rem;
+}
+
+.overview-details {
+	margin-top: 15px;
+}
+
+.details {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 1340px;
+	justify-content: space-between;
+}
+
+.overview-details .born-details {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 10px;
+	font-family: "Poppins", sans-serif;
+	font-size: 17px;
+	color: #ffffff;
+}
+
+.overview-details .born-details .bold-born {
+	font-weight: 700;
+}
+
+.overview-details .born-details .date-val {
+	font-weight: 400;
+	color: #ffffff;
+	opacity: 0.95;
+}
+
+.error-biography {
+	margin-top: 50px;
+	width: 1000px;
+	height: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.sad-icon {
+	color: #a1a1a1;
+	height: 80px;
+	width: 80px;
+}
+
+.text {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 1.5rem;
+	font-family: "Poppins", sans-serif;
+}
+
+.movies {
+	margin-top: 20px;
+}
+
+.bar-movie-section {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 10px;
+}
+
+.crew-section {
+	margin-top: 20px;
+}
