@@ -35,6 +35,7 @@ import { useEffect } from "react";
 import SessionHandler from "./Components/SessionExpiredModal/SessionHandler";
 import PersonDetails from "./Components/PersonDetails/PersonDetails";
 import GenreMovies from "./Components/GenreMovies/GenreMovies";
+import { Analytics } from "@vercel/analytics/react";
 // import AuthSuccess from "./Components/Pages/AuthSuccess";
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
 					<ScrollToTop />
 					<Navbar />
 					<SessionHandler />
+					<Analytics />
 					{/* <Home /> */}
 					<Routes>
 						{/* <Route exact path="/" element={<Home />} /> */}

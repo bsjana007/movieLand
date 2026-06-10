@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@studio-freight/lenis": "^1.0.42",
+		"@vercel/analytics": "^2.0.1",
 		"bcryptjs": "^3.0.3",
 		"concurrently": "^9.2.1",
 		"cors": "^2.8.6",
