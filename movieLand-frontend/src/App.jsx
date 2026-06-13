@@ -35,6 +35,7 @@ import { useEffect } from "react";
 import SessionHandler from "./Components/SessionExpiredModal/SessionHandler";
 import PersonDetails from "./Components/PersonDetails/PersonDetails";
 import GenreMovies from "./Components/GenreMovies/GenreMovies";
+import { Analytics } from "@vercel/analytics/next";
 // import AuthSuccess from "./Components/Pages/AuthSuccess";
 
 function App() {
@@ -98,7 +99,11 @@ function App() {
 						/>
 						<Route exact path="/watchlist" element={<Watchlist />} />
 						<Route exact path="/genres" element={<GenreMovies />} />
-						<Route exact path="/genres/:genreId" element={<GenreMovies />} />
+						<Route
+							exact
+							path="/genres/:genreId"
+							element={<GenreMovies />}
+						/>
 						<Route element={<IndianMovies />}>
 							<Route
 								exact
@@ -140,6 +145,7 @@ function App() {
 					<Footer />
 				</Router>
 			</MovieState>
+			<Analytics />
 		</>
 	);
 }
