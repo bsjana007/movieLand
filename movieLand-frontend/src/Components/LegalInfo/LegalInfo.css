@@ -1,7 +1,7 @@
 .privacy-container {
 	width: 100%;
 	min-height: 100vh;
-	background: #121212;
+	background: var(--theme-bg-gradient);
 	color: white;
 	font-family: Poppins, sans-serif;
 	padding-bottom: 60px;
@@ -19,7 +19,7 @@
 	font-size: 3.5rem;
 	font-weight: 800;
 	margin-bottom: 10px;
-	background: linear-gradient(135deg, #134e5e, #71b280);
+	background: var(--theme-accent-gradient);
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -34,7 +34,7 @@
 .privacy-divider {
 	height: 4px;
 	width: 60px;
-	background: linear-gradient(90deg, #134e5e, #71b280);
+	background: var(--theme-accent-gradient);
 	margin: 0 auto 30px;
 	border-radius: 2px;
 }
@@ -53,12 +53,12 @@
 }
 
 .privacy-section {
-	background: rgba(255, 255, 255, 0.05);
+	background: var(--bg-secondary);
 	border-radius: 16px;
 	padding: 30px;
 	margin-bottom: 30px;
 	backdrop-filter: blur(10px);
-	border: 1px solid rgba(255, 255, 255, 0.05);
+	border: 1px solid var(--border);
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -71,7 +71,7 @@
 	font-size: 1.8rem;
 	margin-bottom: 20px;
 	font-weight: 700;
-	color: #71b280;
+	color: var(--accent-primary);
 }
 
 .privacy-section p {

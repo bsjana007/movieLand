@@ -12,8 +12,9 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	background: url("https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")
-		center/cover no-repeat;
+	background: radial-gradient(circle at 50% 30%, rgba(255, 183, 3, 0.16) 0%, transparent 60%),
+	            radial-gradient(circle at 80% 70%, rgba(251, 133, 0, 0.08) 0%, transparent 50%),
+	            var(--bg-primary);
 	margin-bottom: 40px;
 	margin-top: 20px; /* spacing from language bar */
 	border-radius: 20px;
@@ -24,17 +25,7 @@
 }
 
 .indian-hero-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: linear-gradient(
-		180deg,
-		rgba(36, 36, 36, 0.4) 0%,
-		rgba(36, 36, 36, 0.8) 100%
-	);
-	z-index: 1;
+	display: none;
 }
 
 .indian-hero-content {

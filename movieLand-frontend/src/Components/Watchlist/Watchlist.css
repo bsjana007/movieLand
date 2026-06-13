@@ -1,12 +1,13 @@
 .watchlist-outer {
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	color: white;
 	padding: 20px;
 }
 
 .watchlist-wrapper {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: repeat(auto-fill, var(--card-width));
+	justify-content: center;
 	gap: 24px;
 	padding: 24px;
 }
@@ -34,7 +35,7 @@
 
 .poster-wrapper img {
 	width: 100%;
-	height: 340px;
+	height: var(--poster-height);
 	object-fit: cover;
 	transition: transform 0.4s ease;
 }

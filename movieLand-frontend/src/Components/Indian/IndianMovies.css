@@ -1,7 +1,7 @@
 .home-wrap {
 	min-height: 100vh;
 	width: 100%;
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	color: white;
 }
 

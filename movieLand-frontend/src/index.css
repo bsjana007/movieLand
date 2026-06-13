@@ -1,16 +1,42 @@
 :root {
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
-	/* font-weight: 400; */
-
-	/* color-scheme: light dark; */
-	/* color: rgba(255, 255, 255, 0.87);
-	background-color: #242424; */
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	/* Midnight Gold Theme Variables */
+	--bg-primary: #080c14;
+	--bg-secondary: #101726;
+	--bg-hover: #19243b;
+
+	--accent-primary: #ffb703;
+	--accent-secondary: #fb8500;
+
+	--text-primary: #f8fafc;
+	--text-secondary: #cbd5e1;
+	--text-muted: #64748b;
+
+	--danger: #ef4444;
+	--border: rgba(255, 255, 255, 0.08);
+	--shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+	/* Gradients */
+	--theme-bg-gradient: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+	--theme-accent-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+
+	/* Unified Sizing System */
+	--card-width: 180px;
+	--poster-height: 270px;
+}
+
+body {
+	margin: 0;
+	background-color: var(--bg-primary);
+	color: var(--text-primary);
+	min-height: 100vh;
 }
 
 /* body {

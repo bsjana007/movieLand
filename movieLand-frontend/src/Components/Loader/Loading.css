@@ -1,5 +1,5 @@
 .loader-container {
-	/* background: linear-gradient(180deg, #242424, #134e5e); */
+	/* background: var(--theme-bg-gradient); */
 	/* 'd-flex' equivalent */
 	display: flex;
 

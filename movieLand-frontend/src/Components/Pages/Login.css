@@ -1,6 +1,6 @@
 .login-outer {
 	padding: 40px;
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	color: white;
 	font-family: Poppins, sans-serif;
 }
@@ -25,11 +25,11 @@
 .login-content {
 	height: 550px;
 	width: 600px;
-	background-color: rgba(255, 255, 255, 0.08);
+	background-color: var(--bg-secondary);
 	border-radius: 4%;
 	padding: 40px;
 	margin-top: 25px;
-	box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 60px;
+	box-shadow: var(--shadow);
 }
 
 .login-form {
@@ -110,7 +110,7 @@
 }
 
 .forget-link {
-	color: rgba(113, 178, 128);
+	color: var(--accent-primary);
 	font-size: 14px;
 	text-decoration: none;
 }
@@ -118,7 +118,7 @@
 .login-page-btn {
 	color: white;
 	height: 40px;
-	background: linear-gradient(135deg, rgb(19, 78, 94), rgb(113, 178, 128));
+	background: var(--theme-accent-gradient);
 	border: none;
 	border-radius: 12px;
 	font-size: 17px;
@@ -128,7 +128,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
-	box-shadow: rgba(19, 78, 94, 0.3) 0px 4px 15px;
+	box-shadow: rgba(251, 133, 0, 0.3) 0px 4px 15px;
 }
 
 .form-element-span {
@@ -163,7 +163,7 @@
 	gap: 6px;
 	height: 40px;
 	width: 150px;
-	background: rgba(255, 255, 255, 0.1);
+	background: var(--bg-hover);
 	border-radius: 5px;
 	/* color: rgba(255, 255, 255, 0.5); */
 	font-weight: 600;

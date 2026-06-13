@@ -1,5 +1,5 @@
 .navbar {
-	background-color: #242424;
+	background-color: var(--bg-secondary);
 	color: white;
 	position: sticky;
 	top: 0;
@@ -75,8 +75,8 @@
 		border-color 0.3s ease;
 }
 .search:focus {
-	border-color: #bde8f5;
-	box-shadow: 0 0 0 2px rgba(32, 141, 237, 0.6);
+	border-color: var(--accent-primary);
+	box-shadow: 0 0 0 2px rgba(255, 183, 3, 0.4);
 }
 
 .search-button {
@@ -114,7 +114,7 @@
 
 .wishlist-btn:hover {
 	background-color: rgba(255, 255, 255, 0.1);
-	color: #3fedd9;
+	color: var(--accent-primary);
 	transform: scale(1.05);
 }
 
@@ -141,7 +141,7 @@
 
 .signup-btn {
 	text-decoration: none;
-	background: #3fedd9;
+	background: var(--accent-primary);
 	color: black;
 	border: none;
 	padding: 6px 14px;
@@ -153,7 +153,7 @@
 }
 
 .signup-btn:hover {
-	background: #258a82;
+	background: var(--accent-secondary);
 }
 
 /* custom dropdown */
@@ -173,11 +173,11 @@
 
 /* menu hidden by default */
 .dropdown-menu {
-	border: 1px solid rgba(255, 255, 255, 0.32);
+	border: 1px solid var(--border);
 	position: absolute;
 	top: 100%;
 	left: 0;
-	background: #242424;
+	background: var(--bg-secondary);
 	min-width: 170px;
 	border-radius: 6px;
 	margin-top: 2px;
@@ -217,7 +217,7 @@
 }
 
 .dropdown-menu li:hover {
-	background: #134e5e;
+	background: var(--bg-hover);
 	width: 140px;
 }
 
@@ -331,7 +331,7 @@
 
 .user-icon-btn:hover {
 	background-color: rgba(255, 255, 255, 0.1);
-	color: #3fedd9;
+	color: var(--accent-primary);
 	transform: scale(1.05);
 }
 

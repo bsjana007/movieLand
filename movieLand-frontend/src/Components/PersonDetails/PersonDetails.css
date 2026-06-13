@@ -1,7 +1,7 @@
 .outer-section {
 	padding: 40px;
 	color: white;
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	display: flex;
 	justify-content: center;
 }

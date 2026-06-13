@@ -2,33 +2,29 @@
 .home-v2-wrap {
 	width: 100%;
 	min-height: 100vh;
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	color: white;
 	font-family: 'Poppins', sans-serif;
 	overflow-x: hidden;
 }
 
-/* Hero Section */
 .hero-section {
 	position: relative;
 	width: 100%;
-	height: 60vh;
-	min-height: 500px;
+	height: 50vh;
+	min-height: 400px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	background: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+	background: radial-gradient(circle at 50% 30%, rgba(255, 183, 3, 0.16) 0%, transparent 60%),
+	            radial-gradient(circle at 80% 80%, rgba(251, 133, 0, 0.08) 0%, transparent 50%),
+	            var(--bg-primary);
+	overflow: hidden;
 }
 
 .hero-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: linear-gradient(180deg, rgba(36, 36, 36, 0.4) 0%, rgba(36, 36, 36, 0.9) 70%, #242424 100%);
-	z-index: 1;
+	display: none;
 }
 
 .hero-content {
@@ -48,7 +44,7 @@
 }
 
 .highlight {
-	background: linear-gradient(90deg, #f3d2b3, #b08a64, #3a3a3a);
+	background: var(--theme-accent-gradient);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
@@ -79,14 +75,14 @@
 }
 
 .primary-btn {
-	background: linear-gradient(135deg, #b08a64, #f3d2b3);
+	background: var(--theme-accent-gradient);
 	color: #1a1a1a;
-	box-shadow: 0 10px 25px rgba(176, 138, 100, 0.4);
+	box-shadow: 0 10px 25px rgba(251, 133, 0, 0.3);
 }
 
 .primary-btn:hover {
 	transform: translateY(-3px);
-	box-shadow: 0 15px 35px rgba(176, 138, 100, 0.6);
+	box-shadow: 0 15px 35px rgba(251, 133, 0, 0.5);
 }
 
 .secondary-btn {
@@ -114,18 +110,18 @@
 }
 
 .section-container {
-	background: rgba(255, 255, 255, 0.05);
-	border: 1px solid rgba(255, 255, 255, 0.05);
+	background: var(--bg-secondary);
+	border: 1px solid var(--border);
 	border-radius: 20px;
 	overflow: hidden;
 	backdrop-filter: blur(20px);
-	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	box-shadow: var(--shadow);
 	transition: all 0.3s ease;
 }
 
 .section-container:hover {
-	border-color: rgba(255, 255, 255, 0.1);
-	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	border-color: rgba(255, 255, 255, 0.15);
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .section-header {

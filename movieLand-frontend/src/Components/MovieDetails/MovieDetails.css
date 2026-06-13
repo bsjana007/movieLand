@@ -3,7 +3,7 @@
 	/* gap: 30px; */
 	padding: 40px;
 	color: white;
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 }
 
 .movie-banner {
@@ -389,7 +389,7 @@
 	width: 44px;
 	height: 44px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, #134e5e, #71b280);
+	background: var(--theme-accent-gradient);
 	color: white;
 	display: flex;
 	align-items: center;
@@ -569,7 +569,7 @@
 	width: 56px;
 	height: 56px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, #134e5e, #71b280);
+	background: var(--theme-accent-gradient);
 	color: white;
 	display: flex;
 	align-items: center;
@@ -806,14 +806,16 @@
 
 .similar-wrapper {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: repeat(auto-fill, var(--card-width));
+	justify-content: center;
 	gap: 24px;
 	padding: 24px;
 }
 
 .recommended-wrapper {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: repeat(auto-fill, var(--card-width));
+	justify-content: center;
 	gap: 24px;
 	padding: 24px;
 }
@@ -841,7 +843,7 @@
 
 .poster-wrapper img {
 	width: 100%;
-	height: 340px;
+	height: var(--poster-height);
 	object-fit: cover;
 	transition: transform 0.4s ease;
 }
@@ -1069,7 +1071,7 @@
 /* loader */
 
 .page-loader {
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 	height: 100vh; /* full page height */
 	display: flex;
 	align-items: center; /* vertical center */

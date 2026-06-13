@@ -1,10 +1,11 @@
 .movie-wrapper-indian {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: repeat(auto-fill, var(--card-width));
+	justify-content: center;
 	gap: 24px;
 	padding: 24px;
 
-	background: linear-gradient(180deg, #242424, #134e5e);
+	background: var(--theme-bg-gradient);
 }
 
 .movie-card {
@@ -30,7 +31,7 @@
 
 .poster-wrapper img {
 	width: 100%;
-	height: 340px;
+	height: var(--poster-height);
 	object-fit: cover;
 	transition: transform 0.4s ease;
 }
@@ -104,7 +105,7 @@
 /* Poster skeleton */
 .skeleton-box {
 	width: 100%;
-	height: 418px;
+	height: var(--poster-height);
 	border-radius: 10px;
 	background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 37%, #2a2a2a 63%);
 	animation: shimmer 1.4s infinite;
@@ -140,7 +141,7 @@
 
 /* SEE MORE CARD */
 .see-more-card {
-	height: 418px;
+	height: calc(var(--poster-height) + 78px);
 	display: flex;
 	align-items: center;
 	justify-content: center;

@@ -216,11 +216,14 @@ function SignUp() {
 									/>
 									<span className="checkbox-span">
 										I agree to the{" "}
-										<Link to="/" className="checkbox-span-link">
+										<Link to="/terms" className="checkbox-span-link">
 											Terms of Service
 										</Link>{" "}
 										and{" "}
-										<Link to="/" className="checkbox-span-link">
+										<Link
+											to="/privacy"
+											className="checkbox-span-link"
+										>
 											Privacy Policy
 										</Link>{" "}
 									</span>
