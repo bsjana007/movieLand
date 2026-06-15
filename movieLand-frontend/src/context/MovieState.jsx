@@ -45,6 +45,8 @@ function MovieState(props) {
 	const [providers, setProviders] = useState([]);
 	const [watchlist, setWatchlist] = useState([]);
 	const [watchlistTv, setWatchlistTv] = useState([]);
+	const [watched, setWatched] = useState([]);
+	const [watchedTv, setWatchedTv] = useState([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [loading, setLoading] = useState(false);
@@ -268,12 +270,12 @@ function MovieState(props) {
 			const response = await fetch(`${host}/movie/${id}`, options);
 			const data = await response.json();
 			setMovieDetails(data);
+			// console.log(data);
 		} catch (error) {
 			console.error("Error Fetching Movie Details:", error);
 		} finally {
 			setLoadingDetails(false);
 		}
-		// console.log(data);
 	};
 
 	const fetchMovieImages = async (id) => {
@@ -349,10 +351,12 @@ function MovieState(props) {
 			// console.log(data);
 
 			setWatchlist(Array.isArray(data) ? data : []);
+			setWatchlistTv(Array.isArray(data) ? data : []);
 			// console.log(getAuthHeaders());
 		} catch (error) {
 			if (error.message === "jwt expired") return;
 			setWatchlist([]);
+			setWatchlistTv([]);
 		}
 	};
 
@@ -435,6 +439,109 @@ function MovieState(props) {
 			await checkJwtError(response);
 			const data = await response.json();
 			setWatchlistTv(data);
+		} catch (error) {
+			if (error.message === "jwt expired") return;
+			console.error(error);
+		}
+	};
+
+	const fetchWatched = async () => {
+		try {
+			const response = await fetch(`${backendHost}/api/watched`, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			});
+			await checkJwtError(response);
+			const data = await response.json();
+			setWatched(Array.isArray(data) ? data : []);
+			setWatchedTv(Array.isArray(data) ? data : []);
+		} catch (error) {
+			if (error.message === "jwt expired") return;
+			setWatched([]);
+			setWatchedTv([]);
+		}
+	};
+
+	const addToWatched = async (movie) => {
+		try {
+			const response = await fetch(`${backendHost}/api/watched/add`, {
+				method: "POST",
+				headers: getAuthHeaders(),
+				body: JSON.stringify({
+					movieId: movie.id,
+					title: movie.title || movie.name,
+					poster_path: movie.poster_path,
+					vote_average: movie.vote_average,
+					release_date: movie.release_date || movie.first_air_date,
+					media_type: "movie",
+				}),
+			});
+			await checkJwtError(response);
+			const data = await response.json();
+			setWatched(data);
+			setWatchedTv(data);
+		} catch (error) {
+			if (error.message === "jwt expired") return;
+			console.error(error);
+		}
+	};
+
+	const addToWatchedTv = async (movie) => {
+		try {
+			const response = await fetch(`${backendHost}/api/watched/add`, {
+				method: "POST",
+				headers: getAuthHeaders(),
+				body: JSON.stringify({
+					movieId: movie.id,
+					title: movie.title || movie.name,
+					poster_path: movie.poster_path,
+					vote_average: movie.vote_average,
+					release_date: movie.release_date || movie.first_air_date,
+					media_type: "tv",
+				}),
+			});
+			await checkJwtError(response);
+			const data = await response.json();
+			setWatchedTv(data);
+			setWatched(data);
+		} catch (error) {
+			if (error.message === "jwt expired") return;
+			console.error(error);
+		}
+	};
+
+	const removeFromWatched = async (movieId) => {
+		try {
+			const response = await fetch(`${backendHost}/api/watched/${movieId}`, {
+				method: "DELETE",
+				headers: getAuthHeaders(),
+			});
+			await checkJwtError(response);
+			const data = await response.json();
+			setWatched(data);
+			setWatchedTv(data);
+		} catch (error) {
+			if (error.message === "jwt expired") return;
+			console.error(error);
+		}
+	};
+
+	const removeFromWatchedTv = async ({ movieId, media_type }) => {
+		try {
+			const response = await fetch(`${backendHost}/api/watched/${movieId}`, {
+				method: "DELETE",
+				headers: getAuthHeaders(),
+				body: JSON.stringify({
+					movieId,
+					media_type,
+				}),
+			});
+			await checkJwtError(response);
+			const data = await response.json();
+			setWatchedTv(data);
+			setWatched(data);
 		} catch (error) {
 			if (error.message === "jwt expired") return;
 			console.error(error);
@@ -635,7 +742,10 @@ function MovieState(props) {
 	const fetchMovieGenres = async () => {
 		try {
 			setLoadingGenres(true);
-			const response = await fetch(`${host}/genre/movie/list?language=en`, options);
+			const response = await fetch(
+				`${host}/genre/movie/list?language=en`,
+				options,
+			);
 			const data = await response.json();
 			setMovieGenres(data.genres || []);
 			return data.genres || [];
@@ -653,7 +763,7 @@ function MovieState(props) {
 			setLoadingGenreMovies(true);
 			const response = await fetch(
 				`${host}/discover/movie?with_genres=${id}&sort_by=popularity.desc&page=${pageNum}`,
-				options
+				options,
 			);
 			const data = await response.json();
 
@@ -705,6 +815,8 @@ function MovieState(props) {
 				providers,
 				watchlist,
 				watchlistTv,
+				watched,
+				watchedTv,
 				trendingTvShows,
 				popularTvShows,
 				topRatedTvShows,
@@ -766,6 +878,11 @@ function MovieState(props) {
 				fetchTvProviders,
 				addToWatchlistTv,
 				removeFromWatchlistTv,
+				fetchWatched,
+				addToWatched,
+				addToWatchedTv,
+				removeFromWatched,
+				removeFromWatchedTv,
 				fetchSeasonDetails,
 				fetchEpisodeDetails,
 				fetchSeasonVideos,

@@ -10,6 +10,7 @@ function TvDetails() {
 	const navigate = useNavigate();
 	const [reviewIndex, setReviewIndex] = useState(0);
 	const [activeReview, setActiveReview] = useState(null);
+	const [showLoginModal, setShowLoginModal] = useState(false);
 
 	const getAvatarUrl = (avatarPath) => {
 		if (!avatarPath) return null;
@@ -46,6 +47,10 @@ function TvDetails() {
 		addToWatchlistTv,
 		removeFromWatchlistTv,
 		fetchWatchlist,
+		watchedTv,
+		addToWatchedTv,
+		removeFromWatchedTv,
+		fetchWatched,
 		//eslint-disable-next-line
 		tvVideos,
 		fetchTvVideos,
@@ -74,6 +79,7 @@ function TvDetails() {
 		loadTrailer();
 		fetchTvProviders(id);
 		fetchWatchlist();
+		fetchWatched();
 		//eslint-disable-next-line
 	}, [id]);
 
@@ -95,6 +101,13 @@ function TvDetails() {
 			(movie) => movie.movieId === tvDetails.id && movie.media_type == "tv",
 		);
 
+	const isWatched =
+		tvDetails &&
+		Array.isArray(watchedTv) &&
+		watchedTv.some(
+			(movie) => movie.movieId === tvDetails.id && movie.media_type == "tv",
+		);
+
 	const toggleSimilarOpen = () => {
 		setOpenSimilar((prev) => !prev);
 	};
@@ -103,11 +116,29 @@ function TvDetails() {
 		setOpenRecommended((prev) => !prev);
 	};
 
-	const handleWatchlistClick = async () => {
+	const handleWatchlistClick = () => {
+		if (!localStorage.getItem("token")) {
+			setShowLoginModal(true);
+			return;
+		}
+
 		if (isWatchlisted) {
 			removeFromWatchlistTv({ movieId: tvDetails.id, media_type: "tv" });
 		} else {
 			addToWatchlistTv(tvDetails);
+		}
+	};
+
+	const handleWatchedClick = async () => {
+		if (!localStorage.getItem("token")) {
+			setShowLoginModal(true);
+			return;
+		}
+
+		if (isWatched) {
+			removeFromWatchedTv({ movieId: tvDetails.id, media_type: "tv" });
+		} else {
+			addToWatchedTv(tvDetails);
 		}
 	};
 
@@ -118,127 +149,212 @@ function TvDetails() {
 			</div>
 		);
 
+	// Helper calculations for cinematic details page redesign
+	const releaseYear = tvDetails.first_air_date
+		? tvDetails.first_air_date.split("-")[0]
+		: "N/A";
+	const creatorName =
+		tvDetails.created_by?.map((c) => c.name).join(", ") ||
+		tvCrew.find((m) => m.job === "Director" || m.job === "Executive Producer")
+			?.name ||
+		"N/A";
+	const productionCountry =
+		tvDetails.production_countries?.[0]?.name ||
+		tvDetails.origin_country?.[0] ||
+		"N/A";
+	const spokenLanguage =
+		tvDetails.spoken_languages?.[0]?.english_name ||
+		tvDetails.original_language ||
+		"N/A";
+	const certification = tvDetails.adult ? "A 18+" : "U/A 13+";
+	const seasonsCount = tvDetails.number_of_seasons || 0;
+
 	return (
 		<>
 			<div className="movie-details">
-				<div className="movie-banner">
+				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				<div className="detail-hero-backdrop">
 					<img
 						src={
-							tvDetails.poster_path
-								? `https://image.tmdb.org/t/p/w500${tvDetails.poster_path}`
-								: noMovie
+							tvDetails.backdrop_path
+								? `https://image.tmdb.org/t/p/w1280${tvDetails.backdrop_path}`
+								: `https://image.tmdb.org/t/p/w1280${tvDetails.poster_path}`
 						}
 						alt={tvDetails.name}
-						className="poster"
+						className="backdrop-img"
 					/>
-					<div className="container">
-						<div className="details-content">
-							<h1>{tvDetails.name}</h1>
-							<p>{tvDetails.overview}</p>
+					<div className="backdrop-overlay"></div>
+					{trailer && (
+						<button
+							className="play-trailer-btn"
+							onClick={() => setIsTrailerOpen(true)}
+						>
+							<i className="fa-solid fa-play"></i>
+						</button>
+					)}
+				</div>
 
-							<p>
-								<strong>Rating:</strong> ⭐{" "}
-								{tvDetails.vote_average.toFixed(1)}
-							</p>
-							<p>
-								<strong>Release Date:</strong>{" "}
-								{tvDetails.first_air_date}
-							</p>
-							<p>
-								<strong>Total Seasons:</strong>{" "}
-								{tvDetails.number_of_seasons}
-							</p>
-						</div>
-						<div className="watch-outer">
-							<div className="watch-wrapper">
-								<button
-									className={`watchlist-btn ${isWatchlisted ? "remove" : "add"}`}
-									onClick={handleWatchlistClick}
-								>
-									<span className="icon">
-										<i
-											className={`fa-solid ${isWatchlisted ? "fa-trash" : "fa-plus"} fa-xl`}
-										></i>
-									</span>
-									<span className="btn-text">
-										{!isWatchlisted
-											? "Add to Watchlist"
-											: "Remove from WatchList"}
-									</span>
-								</button>
+				{/* 2. Metadata Header Row */}
+				<div className="detail-metadata-header">
+					<div className="header-left-poster">
+						<img
+							src={
+								tvDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${tvDetails.poster_path}`
+									: noMovie
+							}
+							alt={tvDetails.name}
+							className="detail-poster"
+						/>
+					</div>
+					<div className="header-center-info">
+						<p className="meta-type-duration">
+							TV Show • {releaseYear} • {seasonsCount}{" "}
+							{seasonsCount === 1 ? "Season" : "Seasons"}
+						</p>
+						<h1 className="movie-detail-title">{tvDetails.name}</h1>
+						<div className="meta-details-grid">
+							<div className="meta-col">
+								<span className="meta-label">Created By</span>
+								<span className="meta-val">{creatorName}</span>
 							</div>
-							<div className="watch-now-wrapper">
-								<button
-									className="watchnow-btn"
-									onClick={() => setIsTrailerOpen(true)}
-									disabled={!trailer}
-								>
-									<i className="fa-solid fa-play fa-xl"></i>
-									<div className="btn-text">Watch Trailer</div>
-								</button>
+							<div className="meta-col">
+								<span className="meta-label">Country</span>
+								<span className="meta-val">{productionCountry}</span>
 							</div>
-						</div>
-						<div className="providers-wrapper">
-							{tvProviders.map((provider) => (
-								<div
-									className="provider-card"
-									key={provider.provider_id}
-								>
-									<img
-										src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-										alt={provider.provider_name}
-										className="provider_logo"
-									/>
-									<span className="provider-name">
-										{provider.provider_name.slice(0, 19)}
-									</span>
-								</div>
-							))}
+							<div className="meta-col">
+								<span className="meta-label">Language</span>
+								<span className="meta-val">{spokenLanguage}</span>
+							</div>
+							<div className="meta-col">
+								<span className="meta-label">Age Rating</span>
+								<span className="meta-val">{certification}</span>
+							</div>
 						</div>
 					</div>
-					<div className="aside-wrapper">
-						<div className="genres-section">
-							<div className="center">
-								<div className="bar"></div>
-								<div className="bar-text">Genres</div>
-							</div>
-							<div className="genres-list">
+					<div className="header-right-actions">
+						<button
+							className={`action-pill-btn purple-btn ${isWatched ? "watched" : ""}`}
+							onClick={handleWatchedClick}
+						>
+							<i
+								className={`fa-solid ${isWatched ? "fa-check" : "fa-plus"}`}
+							></i>
+							<span>{isWatched ? "Watched" : "Mark as Watched"}</span>
+						</button>
+						<button
+							className={`action-pill-btn gray-btn ${isWatchlisted ? "in-collection" : ""}`}
+							onClick={handleWatchlistClick}
+						>
+							<i
+								className={`${isWatchlisted ? "fa-solid" : "fa-regular"} fa-bookmark`}
+							></i>
+							<span>
+								{isWatchlisted
+									? "Added to Collection"
+									: "Add to Collection"}
+							</span>
+						</button>
+					</div>
+				</div>
+
+				{/* 3. Main Overview Grid */}
+				<div className="detail-overview-grid">
+					<div className="overview-left-column">
+						<div className="genres-section-overview">
+							<h2>Overview</h2>
+							<p className="overview-text">{tvDetails.overview}</p>
+							<div
+								className="genres-pills-list"
+								style={{ marginBottom: "30px" }}
+							>
 								{tvDetails.genres?.map((genre) => (
-									// <div className="card-flex" >
-									<div
-										className="genre-card"
+									<span
 										key={genre.id}
+										className="genre-pill-tag"
 										onClick={() => navigate(`/genres/${genre.id}`)}
 									>
-										<p>{genre.name}</p>
-									</div>
-									// </div>
+										{genre.name}
+									</span>
 								))}
 							</div>
 						</div>
-						<div className="seasons-section">
-							<div className="center">
-								<div className="bar"></div>
-								<div className="bar-text">Seasons</div>
-							</div>
-							<div className="seasons-list">
-								{tvDetails.seasons?.map((season) => (
-									// <div className="card-flex" >
+
+						{/* Seasons Section inside Overview Column */}
+						{tvDetails.seasons && tvDetails.seasons.length > 0 && (
+							<div
+								className="seasons-section-redesign"
+								style={{ marginTop: "20px" }}
+							>
+								<div
+									className="center"
+									style={{
+										justifyContent: "flex-start",
+										marginBottom: "15px",
+									}}
+								>
 									<div
-										className="season-card"
-										key={season.id}
-										onClick={() =>
-											navigate(
-												`/tv/${tvDetails.id}/season/${season.season_number}`,
-											)
-										}
+										className="bar"
+										style={{ background: "#8b5cf6" }}
+									></div>
+									<h3
+										style={{
+											fontSize: "1.4rem",
+											fontWeight: "600",
+											color: "white",
+											margin: 0,
+										}}
 									>
-										{/* <p>{season.name}</p> */}
-										<p>{season.name?.replace(/Season\s/i, "S")}</p>
-									</div>
-									// </div>
-								))}
+										Seasons
+									</h3>
+								</div>
+								<div className="genres-pills-list">
+									{tvDetails.seasons.map((season) => (
+										<span
+											key={season.id}
+											className="genre-pill-tag"
+											style={{
+												border: "1px solid rgba(139, 92, 246, 0.3)",
+											}}
+											onClick={() =>
+												navigate(
+													`/tv/${tvDetails.id}/season/${season.season_number}`,
+												)
+											}
+										>
+											{season.name}
+										</span>
+									))}
+								</div>
 							</div>
+						)}
+					</div>
+					<div className="overview-right-column">
+						<div className="where-to-watch-card">
+							<h3>Where to Watch</h3>
+							{tvProviders && tvProviders.length > 0 ? (
+								<div className="providers-pills-grid">
+									{tvProviders.map((provider) => (
+										<div
+											className="provider-pill-item"
+											key={provider.provider_id}
+										>
+											<img
+												src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+												alt={provider.provider_name}
+												className="provider-logo-img"
+											/>
+											<span className="provider-pill-name">
+												{provider.provider_name}
+											</span>
+										</div>
+									))}
+								</div>
+							) : (
+								<p className="no-providers-msg">
+									Not available to stream currently.
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
@@ -652,6 +768,71 @@ function TvDetails() {
 
 						<div className="review-modal-body" data-lenis-prevent>
 							<p>{activeReview.content}</p>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{showLoginModal && (
+				<div
+					className="glass-modal-overlay"
+					onClick={() => setShowLoginModal(false)}
+				>
+					<div
+						className="glass-modal-content"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<button
+							className="glass-modal-close"
+							onClick={() => setShowLoginModal(false)}
+						>
+							✕
+						</button>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="40"
+							height="40"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="#a855f7"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="glass-modal-icon"
+							style={{
+								margin: "0 auto 15px auto",
+								display: "block",
+							}}
+						>
+							<rect
+								width="18"
+								height="11"
+								x="3"
+								y="11"
+								rx="2"
+								ry="2"
+							></rect>
+							<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+						</svg>
+
+						<h2>Authentication Required</h2>
+						<p>
+							Please log in to mark titles as watched or add them to your
+							collection.
+						</p>
+						<div className="glass-modal-actions">
+							<button
+								className="glass-login-btn"
+								onClick={() => navigate("/login")}
+							>
+								LogIn
+							</button>
+							<button
+								className="glass-cancel-btn"
+								onClick={() => setShowLoginModal(false)}
+							>
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>

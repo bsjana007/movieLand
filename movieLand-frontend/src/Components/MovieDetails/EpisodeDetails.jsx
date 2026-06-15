@@ -186,165 +186,202 @@ function EpisodeDetails() {
 			</div>
 		);
 
+	const releaseYear = episodeDetails.air_date ? episodeDetails.air_date.split("-")[0] : "N/A";
+
 	return (
 		<>
 			<div className="movie-details">
-				<div className="movie-banner">
-					<section className="episode-wrapper">
-						<div className="episode-path">
-							<div className="episode-title-rating-wrapper">
-								<div className="episode-title-section">
-									<span className="show-name">
-										<p
-											className="tv-title"
-											onClick={() => handleBackShow()}
-										>
-											{tvDetails.name}
-										</p>
-										{/* <i className="fa-solid fa-circle fa-2xs"></i> */}
-										<i className="fa-solid fa-angle-right fa-sm"></i>
-										<p
-											className="season-number"
-											onClick={() => handleBack()}
-										>
-											S{seasonNumber}
-										</p>
-										<i className="fa-solid fa-angle-right fa-sm"></i>
-										<p className="episode-number">E{episodeNumber}</p>
-									</span>
-									<p className="episode-title">
-										{episodeDetails.name}
-									</p>
-									<div className="episode-details">
-										<p>Episode Aired : {episodeDetails.air_date}</p>
-										<div className="dot"></div>
-										<p>
-											<i className="fa-solid fa-star fa-sm"></i>{" "}
-											{episodeDetails.vote_average}
-										</p>
-										<div className="dot"></div>
-										<p>
-											<i className="fa-solid fa-alarm-clock fa-sm"></i>{" "}
-											{episodeDetails.runtime} min
-										</p>
-									</div>
-								</div>
-								<div className="episode-rating-section">
-									<div className="imdb-rating">
-										<p className="rating-label">MovieLand RATING</p>
+				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				<div className="detail-hero-backdrop">
+					<img
+						src={
+							tvDetails.backdrop_path
+								? `https://image.tmdb.org/t/p/w1280${tvDetails.backdrop_path}`
+								: `https://image.tmdb.org/t/p/w1280${episodeDetails.still_path}`
+						}
+						alt={episodeDetails.name}
+						className="backdrop-img"
+					/>
+					<div className="backdrop-overlay"></div>
+				</div>
 
-										<div className="rating-content">
-											<div className="star">
-												<span className="star">⭐</span>
-											</div>
-											<div className="rating-section">
-												<span className="rating-value">
-													{episodeDetails.vote_average.toFixed(1)}
-													<span className="out-of">/10</span>
-												</span>
-												<p className="rating-count">
-													{episodeDetails.vote_count}
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
+				{/* 2. Metadata Header Row */}
+				<div className="detail-metadata-header">
+					<div className="header-left-poster">
+						<img
+							src={
+								episodeDetails.still_path
+									? `https://image.tmdb.org/t/p/w500${episodeDetails.still_path}`
+									: seasonDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${seasonDetails.poster_path}`
+									: noMovie
+							}
+							alt={episodeDetails.name}
+							className="detail-poster"
+						/>
+					</div>
+					<div className="header-center-info">
+						<p className="meta-type-duration">
+							TV Episode • {releaseYear} • {episodeDetails.runtime || "N/A"} min
+						</p>
+						<h1 className="movie-detail-title">
+							<span onClick={() => handleBackShow()} style={{ cursor: "pointer" }}>{tvDetails.name}</span>
+							<span style={{ color: "rgba(255,255,255,0.4)", margin: "0 10px" }}>›</span>
+							<span onClick={() => handleBack()} style={{ cursor: "pointer", color: "var(--theme-accent, #ffb703)" }}>S{seasonNumber}</span>
+							<span style={{ color: "rgba(255,255,255,0.4)", margin: "0 10px" }}>›</span>
+							<span style={{ color: "#f63049" }}>E{episodeNumber}</span>
+							<span style={{ color: "rgba(255,255,255,0.4)", margin: "0 15px" }}>:</span>
+							<span>{episodeDetails.name}</span>
+						</h1>
+						<div className="meta-details-grid">
+							<div className="meta-col">
+								<span className="meta-label">Air Date</span>
+								<span className="meta-val">{episodeDetails.air_date || "N/A"}</span>
 							</div>
-							<div className="episode-banner">
-								<div className="episode-img">
-									<img
-										src={
-											seasonDetails.poster_path
-												? `https://image.tmdb.org/t/p/w500${seasonDetails.poster_path}`
-												: noMovie
-										}
-										alt={seasonDetails.name}
-										className="poster"
-									/>
-								</div>
-								<div className="episode-video">
-									{trailer?.key ? (
-										<div className="video">
-											{<iframe
-												src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1`}
-												title="Trailer"
-												allow="encrypted-media; picture-in-picture"
-												allowFullScreen
-											/> ? (
-												<iframe
-													src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1`}
-													title="Trailer"
-													allow="encrypted-media; picture-in-picture"
-													allowFullScreen
-												/>
-											) : (
-												"Loaing Trailer..."
-											)}
-										</div>
-									) : (
-										<p className="no-trailer">Video not available</p>
-									)}
-								</div>
+							<div className="meta-col">
+								<span className="meta-label">Rating</span>
+								<span className="meta-val">⭐ {episodeDetails.vote_average?.toFixed(1) || "N/A"}</span>
 							</div>
-							<div className="overview-section">
-								<div className="overview-genre-section">
-									<div className="genres-section">
-										<div className="center">
-											<div className="bar"></div>
-											<h2>Genres</h2>
-										</div>
-										<div className="genres-list">
-											{tvDetails.genres?.map((genre) => (
-												// <div className="card-flex" >
-												<div
-													className="genre-card"
-													key={genre.id}
-													onClick={() =>
-														navigate(`/genres/${genre.id}`)
-													}
-												>
-													<p>{genre.name}</p>
-												</div>
-												// </div>
-											))}
-										</div>
-									</div>
-									<div className="divider"></div>
-									<div className="episode-overview">
-										<div className="center">
-											<div className="bar"></div>
-											<h2>Overview</h2>
-										</div>
-										<div className="overview">
-											<p>{episodeDetails.overview}</p>
-										</div>
-									</div>
-								</div>
-								<div className="streaming-section">
-									<div className="steaming">
-										<span className="streaming-text">STREAMING</span>
-										<div className="providers-wrapper">
-											{tvProviders.map((provider) => (
-												<div
-													className="provider-card"
-													key={provider.provider_id}
-												>
-													<img
-														src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-														alt={provider.provider_name}
-														className="provider_logo"
-													/>
-													<span className="provider-name">
-														{provider.provider_name.slice(0, 19)}
-													</span>
-												</div>
-											))}
-										</div>
-									</div>
-								</div>
+							<div className="meta-col">
+								<span className="meta-label">Runtime</span>
+								<span className="meta-val">{episodeDetails.runtime || "N/A"} min</span>
+							</div>
+							<div className="meta-col">
+								<span className="meta-label">Show Status</span>
+								<span className="meta-val">{tvDetails.status || "N/A"}</span>
 							</div>
 						</div>
-					</section>
+					</div>
+					<div className="header-right-actions">
+						<button className="action-pill-btn gray-btn" onClick={handleBack} style={{ width: "160px" }}>
+							<i className="fa-solid fa-arrow-left"></i>
+							<span>Back to Season</span>
+						</button>
+					</div>
+				</div>
+
+				{/* 3. Media Grid (Poster left, Autoplay Trailer right) */}
+				<div className="episode-media-grid">
+					<div className="episode-poster-showcase">
+						<img
+							src={
+								seasonDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${seasonDetails.poster_path}`
+									: tvDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${tvDetails.poster_path}`
+									: noMovie
+							}
+							alt={seasonDetails.name}
+							className="episode-showcase-poster-img"
+						/>
+					</div>
+					<div className="episode-trailer-autoplay">
+						{trailer?.key ? (
+							<div className="video-player-container">
+								<iframe
+									src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1`}
+									title="Episode Trailer"
+									allow="autoplay; encrypted-media; picture-in-picture"
+									allowFullScreen
+								/>
+							</div>
+						) : (
+							<div className="no-trailer-placeholder">
+								<p>Trailer not available for this episode.</p>
+							</div>
+						)}
+					</div>
+				</div>
+
+				{/* 4. Text Details Grid */}
+				<div className="detail-overview-grid">
+					<div className="overview-left-column">
+						<div className="genres-section-overview">
+							<h2>Overview</h2>
+							<p className="overview-text">{episodeDetails.overview || "No overview available for this episode."}</p>
+							<div className="genres-pills-list" style={{ marginBottom: "30px" }}>
+								{tvDetails.genres?.map((genre) => (
+									<span
+										key={genre.id}
+										className="genre-pill-tag"
+										onClick={() => navigate(`/genres/${genre.id}`)}
+									>
+										{genre.name}
+									</span>
+								))}
+							</div>
+						</div>
+
+						{/* Episodes List from the current season (design like Season Details page) */}
+						{seasonDetails.episodes && seasonDetails.episodes.length > 0 && (
+							<div className="episodes-section-redesign" style={{ marginTop: "20px" }}>
+								<div className="center" style={{ justifyContent: "flex-start", marginBottom: "15px" }}>
+									<div className="bar" style={{ background: "#8b5cf6" }}></div>
+									<h3 style={{ fontSize: "1.4rem", fontWeight: "600", color: "white", margin: 0 }}>Episodes</h3>
+								</div>
+								<div className="genres-pills-list">
+									{seasonDetails.episodes.map((episode) => {
+										const isActive = episode.episode_number === parseInt(episodeNumber);
+										return (
+											<span
+												key={episode.id}
+												className={`genre-pill-tag ${isActive ? "active-episode-pill" : ""}`}
+												style={{
+													border: isActive ? "1px solid var(--theme-accent, #ffb703)" : "1px solid rgba(139, 92, 246, 0.3)",
+													background: isActive ? "rgba(255, 183, 3, 0.15)" : "transparent",
+													color: isActive ? "var(--theme-accent, #ffb703)" : "white"
+												}}
+												onClick={() =>
+													navigate(
+														`/tv/${id}/season/${seasonNumber}/episode/${episode.episode_number}`,
+													)
+												}
+											>
+												{episode.name}
+											</span>
+										);
+									})}
+								</div>
+							</div>
+						)}
+					</div>
+					<div className="overview-right-column">
+						{/* MovieLand Rating Card */}
+						<div className="imdb-rating-card">
+							<div className="rating-card-star">⭐</div>
+							<div>
+								<span className="rating-card-value">
+									{episodeDetails.vote_average?.toFixed(1) || "N/A"}
+									<span className="rating-card-max">/10</span>
+								</span>
+								<p className="rating-card-count">
+									{episodeDetails.vote_count || 0} Ratings
+								</p>
+							</div>
+						</div>
+
+						<div className="where-to-watch-card">
+							<h3>Where to Watch</h3>
+							{tvProviders && tvProviders.length > 0 ? (
+								<div className="providers-pills-grid">
+									{tvProviders.map((provider) => (
+										<div className="provider-pill-item" key={provider.provider_id}>
+											<img
+												src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+												alt={provider.provider_name}
+												className="provider-logo-img"
+											/>
+											<span className="provider-pill-name">
+												{provider.provider_name}
+											</span>
+										</div>
+									))}
+								</div>
+							) : (
+								<p className="no-providers-msg">Not available to stream currently.</p>
+							)}
+						</div>
+					</div>
 				</div>
 				{/* cast */}
 				<div className="cast-section">

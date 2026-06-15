@@ -27,6 +27,16 @@ const UserSchema = new Schema(
 				media_type: String,
 			},
 		],
+		watched: [
+			{
+				movieId: Number,
+				title: String,
+				poster_path: String,
+				vote_average: Number,
+				release_date: String,
+				media_type: String,
+			},
+		],
 	},
 	{ timestamps: true },
 );

@@ -10,6 +10,7 @@ function MovieDetails() {
 	const navigate = useNavigate();
 	const [reviewIndex, setReviewIndex] = useState(0);
 	const [activeReview, setActiveReview] = useState(null);
+	const [showLoginModal, setShowLoginModal] = useState(false);
 
 	const getAvatarUrl = (avatarPath) => {
 		if (!avatarPath) return null;
@@ -46,6 +47,10 @@ function MovieDetails() {
 		addToWatchlist,
 		removeFromWatchlist,
 		fetchWatchlist,
+		watched,
+		addToWatched,
+		removeFromWatched,
+		fetchWatched,
 		//eslint-disable-next-line
 		movieVideos,
 		fetchMovieVideos,
@@ -74,8 +79,35 @@ function MovieDetails() {
 		loadTrailer();
 		fetchProviders(id);
 		fetchWatchlist();
+		fetchWatched();
 		//eslint-disable-next-line
 	}, [id]);
+
+	const handleWatchlistClick = () => {
+		if (!localStorage.getItem("token")) {
+			setShowLoginModal(true);
+			return;
+		}
+
+		if (isWatchlisted) {
+			removeFromWatchlist(movieDetails.id);
+		} else {
+			addToWatchlist(movieDetails);
+		}
+	};
+
+	const handleWatchedClick = () => {
+		if (!localStorage.getItem("token")) {
+			setShowLoginModal(true);
+			return;
+		}
+
+		if (isWatchlisted) {
+			removeFromWatched(movieDetails.id);
+		} else {
+			addToWatched(movieDetails);
+		}
+	};
 
 	useEffect(() => {
 		if (activeReview) {
@@ -93,20 +125,17 @@ function MovieDetails() {
 		Array.isArray(watchlist) &&
 		watchlist.some((movie) => movie.movieId === movieDetails.id);
 
+	const isWatched =
+		movieDetails &&
+		Array.isArray(watched) &&
+		watched.some((movie) => movie.movieId === movieDetails.id);
+
 	const toggleSimilarOpen = () => {
 		setOpenSimilar((prev) => !prev);
 	};
 
 	const toggleRecommended = () => {
 		setOpenRecommended((prev) => !prev);
-	};
-
-	const handleWatchlistClick = async () => {
-		if (isWatchlisted) {
-			removeFromWatchlist(movieDetails.id);
-		} else {
-			addToWatchlist(movieDetails);
-		}
 	};
 
 	// const video =
@@ -122,103 +151,161 @@ function MovieDetails() {
 			</div>
 		);
 
+	// Helper calculations for cinematic details page redesign
+	const releaseYear = movieDetails.release_date
+		? movieDetails.release_date.split("-")[0]
+		: "N/A";
+	const formattedRuntime = (() => {
+		const r = movieDetails.runtime;
+		if (!r) return "N/A";
+		const hrs = Math.floor(r / 60);
+		const mins = r % 60;
+		return hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+	})();
+
+	const directorName =
+		movieCrew.find((member) => member.job === "Director")?.name || "N/A";
+	const productionCountry =
+		movieDetails.production_countries?.[0]?.name || "N/A";
+	const spokenLanguage =
+		movieDetails.spoken_languages?.[0]?.english_name ||
+		movieDetails.original_language ||
+		"N/A";
+	const certification = movieDetails.adult ? "A 18+" : "U/A 13+";
+
 	return (
 		<>
 			<div className="movie-details">
-				<div className="movie-banner">
+				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				<div className="detail-hero-backdrop">
 					<img
 						src={
-							movieDetails.poster_path
-								? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
-								: "/no-image.png"
+							movieDetails.backdrop_path
+								? `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`
+								: `https://image.tmdb.org/t/p/w1280${movieDetails.poster_path}`
 						}
 						alt={movieDetails.title}
-						className="poster"
+						className="backdrop-img"
 					/>
-					<div className="container">
-						<div className="details-content">
-							<h1>{movieDetails.title}</h1>
-							<p>{movieDetails.overview}</p>
+					<div className="backdrop-overlay"></div>
+					{trailer && (
+						<button
+							className="play-trailer-btn"
+							onClick={() => setIsTrailerOpen(true)}
+						>
+							<i className="fa-solid fa-play"></i>
+						</button>
+					)}
+				</div>
 
-							<p>
-								<strong>Rating:</strong> ⭐ {movieDetails.vote_average}
-							</p>
-							<p>
-								<strong>Release Date:</strong>{" "}
-								{movieDetails.release_date}
-							</p>
-							<p>
-								<strong>Runtime:</strong> {movieDetails.runtime} min
-							</p>
-						</div>
-						<div className="watch-outer">
-							<div
-								className={`watch-wrapper ${isWatchlisted ? `watch-wrapper-remove` : `watch-wrapper-add`}`}
-							>
-								<button
-									className={`watchlist-btn ${isWatchlisted ? "remove" : "add"}`}
-									onClick={handleWatchlistClick}
-								>
-									<span className="icon">
-										<i
-											className={`fa-solid ${isWatchlisted ? "fa-trash" : "fa-plus"} fa-xl`}
-										></i>
-									</span>
-									<span className="btn-text">
-										{!isWatchlisted
-											? "Add to Watchlist"
-											: "Remove from WatchList"}
-									</span>
-								</button>
+				{/* 2. Metadata Header Row */}
+				<div className="detail-metadata-header">
+					<div className="header-left-poster">
+						<img
+							src={
+								movieDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+									: noMovie
+							}
+							alt={movieDetails.title}
+							className="detail-poster"
+						/>
+					</div>
+					<div className="header-center-info">
+						<p className="meta-type-duration">
+							Movie • {releaseYear} • {formattedRuntime}
+						</p>
+						<h1 className="movie-detail-title">{movieDetails.title}</h1>
+						<div className="meta-details-grid">
+							<div className="meta-col">
+								<span className="meta-label">Directed By</span>
+								<span className="meta-val">{directorName}</span>
 							</div>
-							<div className="watch-now-wrapper">
-								<button
-									className="watchnow-btn"
-									onClick={() => setIsTrailerOpen(true)}
-									disabled={!trailer}
-								>
-									<i className="fa-solid fa-play fa-xl"></i>
-									<div className="btn-text">Watch Trailer</div>
-								</button>
+							<div className="meta-col">
+								<span className="meta-label">Country</span>
+								<span className="meta-val">{productionCountry}</span>
 							</div>
-						</div>
-						<div className="providers-wrapper">
-							{providers.map((provider) => (
-								<div
-									className="provider-card"
-									key={provider.provider_id}
-								>
-									<img
-										src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-										alt={provider.provider_name}
-										className="provider_logo"
-									/>
-									<span className="provider-name">
-										{provider.provider_name.slice(0, 19)}
-									</span>
-								</div>
-							))}
+							<div className="meta-col">
+								<span className="meta-label">Language</span>
+								<span className="meta-val">{spokenLanguage}</span>
+							</div>
+							<div className="meta-col">
+								<span className="meta-label">Age Rating</span>
+								<span className="meta-val">{certification}</span>
+							</div>
 						</div>
 					</div>
-					<div className="aside-wrapper">
-						<div className="genres-section">
-							<div className="center">
-								<div className="bar"></div>
-								<div className="bar-text">Genres</div>
-							</div>
-							<div className="genres-list">
+					<div className="header-right-actions">
+						<button
+							className={`action-pill-btn purple-btn ${isWatched ? "watched" : ""}`}
+							onClick={handleWatchedClick}
+						>
+							<i
+								className={`fa-solid ${isWatched ? "fa-check" : "fa-plus"}`}
+							></i>
+							<span>{isWatched ? "Watched" : "Mark as Watched"}</span>
+						</button>
+						<button
+							className={`action-pill-btn gray-btn ${isWatchlisted ? "in-collection" : ""}`}
+							onClick={handleWatchlistClick}
+						>
+							<i
+								className={`${isWatchlisted ? "fa-solid" : "fa-regular"} fa-bookmark`}
+							></i>
+							<span>
+								{isWatchlisted
+									? "Added to Collection"
+									: "Add to Collection"}
+							</span>
+						</button>
+					</div>
+				</div>
+
+				{/* 3. Main Overview Grid */}
+				<div className="detail-overview-grid">
+					<div className="overview-left-column">
+						<div className="genres-section-overview">
+							<h2>Overview</h2>
+							<p className="overview-text">{movieDetails.overview}</p>
+							<div className="genres-pills-list">
 								{movieDetails.genres?.map((genre) => (
-									<div
-										className="card-flex"
+									<span
 										key={genre.id}
+										className="genre-pill-tag"
 										onClick={() => navigate(`/genres/${genre.id}`)}
 									>
-										<div className="genre-card">
-											<p>{genre.name}</p>
-										</div>
-									</div>
+										{genre.name}
+									</span>
 								))}
 							</div>
+						</div>
+					</div>
+					<div className="overview-right-column">
+						<div className="where-to-watch-card">
+							<h3>Where to Watch</h3>
+							{providers && providers.length > 0 ? (
+								<div className="providers-pills-grid">
+									{providers.map((provider) => (
+										<div
+											className="provider-pill-item"
+											key={provider.provider_id}
+										>
+											<img
+												src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+												alt={provider.provider_name}
+												className="provider-logo-img"
+											/>
+											<span className="provider-pill-name">
+												{provider.provider_name}
+											</span>
+										</div>
+									))}
+								</div>
+							) : (
+								<p className="no-providers-msg">
+									Not available to stream currently.
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
@@ -624,6 +711,70 @@ function MovieDetails() {
 
 						<div className="review-modal-body" data-lenis-prevent>
 							<p>{activeReview.content}</p>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{showLoginModal && (
+				<div
+					className="glass-modal-overlay"
+					onClick={() => setShowLoginModal(false)}
+				>
+					<div
+						className="glass-modal-content"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<button
+							className="glass-modal-close"
+							onClick={() => setShowLoginModal(false)}
+						>
+							✕
+						</button>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="40"
+							height="40"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="#a855f7"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="glass-modal-icon"
+							style={{
+								margin: "0 auto 15px auto",
+								display: "block",
+							}}
+						>
+							<rect
+								width="18"
+								height="11"
+								x="3"
+								y="11"
+								rx="2"
+								ry="2"
+							></rect>
+							<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+						</svg>
+						<h2>Authentication Required</h2>
+						<p>
+							Please log in to mark titles as watched or add them to your
+							collection.
+						</p>
+						<div className="glass-modal-actions">
+							<button
+								className="glass-login-btn"
+								onClick={() => navigate("/login")}
+							>
+								LogIn
+							</button>
+							<button
+								className="glass-cancel-btn"
+								onClick={() => setShowLoginModal(false)}
+							>
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>

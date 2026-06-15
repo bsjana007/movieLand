@@ -147,99 +147,131 @@ function SeasonDetails() {
 			</div>
 		);
 
+	const releaseYear = seasonDetails.air_date ? seasonDetails.air_date.split("-")[0] : "N/A";
+	const episodesCount = seasonDetails.episodes?.length || 0;
+
 	return (
 		<>
 			<div className="movie-details">
-				<div className="movie-banner">
+				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				<div className="detail-hero-backdrop">
 					<img
 						src={
-							seasonDetails.poster_path
-								? `https://image.tmdb.org/t/p/w500${seasonDetails.poster_path}`
-								: noMovie
+							tvDetails.backdrop_path
+								? `https://image.tmdb.org/t/p/w1280${tvDetails.backdrop_path}`
+								: `https://image.tmdb.org/t/p/w1280${seasonDetails.poster_path}`
 						}
 						alt={seasonDetails.name}
-						className="poster"
+						className="backdrop-img"
 					/>
-					<div className="container">
-						<div className="details-content">
-							<h1 className="series-name">{tvDetails.name}</h1>
-							<h2 className="season-title">{seasonDetails.name}</h2>
-							<p>{seasonDetails.overview}</p>
+					<div className="backdrop-overlay"></div>
+					{trailer && (
+						<button className="play-trailer-btn" onClick={() => setIsTrailerOpen(true)}>
+							<i className="fa-solid fa-play"></i>
+						</button>
+					)}
+				</div>
 
-							<p>
-								<strong>Rating:</strong> ⭐{" "}
-								{seasonDetails.vote_average.toFixed(1)}
-							</p>
-							<p>
-								<strong>Release Date:</strong> {seasonDetails.air_date}
-							</p>
-							<p>
-								<strong>Total Episodes:</strong>{" "}
-								{seasonDetails.episodes?.length || 0}
-							</p>
-						</div>
-						<div className="watch-outer">
-							<div className="back-wrapper">
-								<button className={`back-btn`} onClick={handleBack}>
-									<span className="icon">
-										<i className={`fa-solid fa-arrow-left fa-xl`}></i>
-									</span>
-									<span className="btn-text">Back to Show</span>
-								</button>
+				{/* 2. Metadata Header Row */}
+				<div className="detail-metadata-header">
+					<div className="header-left-poster">
+						<img
+							src={
+								seasonDetails.poster_path
+									? `https://image.tmdb.org/t/p/w500${seasonDetails.poster_path}`
+									: noMovie
+							}
+							alt={seasonDetails.name}
+							className="detail-poster"
+						/>
+					</div>
+					<div className="header-center-info">
+						<p className="meta-type-duration">
+							TV Season • {releaseYear} • {episodesCount} {episodesCount === 1 ? "Episode" : "Episodes"}
+						</p>
+						<h1 className="movie-detail-title">{tvDetails.name} - {seasonDetails.name}</h1>
+						<div className="meta-details-grid">
+							<div className="meta-col">
+								<span className="meta-label">Season</span>
+								<span className="meta-val">S{seasonDetails.season_number}</span>
 							</div>
-							<div className="watch-now-wrapper">
-								<button
-									className="watchnow-btn"
-									onClick={() => setIsTrailerOpen(true)}
-									disabled={!trailer}
-								>
-									<i className="fa-solid fa-play fa-xl"></i>
-									<div className="btn-text">Watch Trailer</div>
-								</button>
+							<div className="meta-col">
+								<span className="meta-label">Air Date</span>
+								<span className="meta-val">{seasonDetails.air_date || "N/A"}</span>
 							</div>
-						</div>
-						<div className="providers-wrapper">
-							{tvProviders.map((provider) => (
-								<div
-									className="provider-card"
-									key={provider.provider_id}
-								>
-									<img
-										src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-										alt={provider.provider_name}
-										className="provider_logo"
-									/>
-									<span className="provider-name">
-										{provider.provider_name.slice(0, 19)}
-									</span>
-								</div>
-							))}
+							<div className="meta-col">
+								<span className="meta-label">Rating</span>
+								<span className="meta-val">⭐ {seasonDetails.vote_average?.toFixed(1) || "N/A"}</span>
+							</div>
+							<div className="meta-col">
+								<span className="meta-label">Show Status</span>
+								<span className="meta-val">{tvDetails.status || "N/A"}</span>
+							</div>
 						</div>
 					</div>
-					<div className="aside-wrapper">
-						<div className="seasons-section">
-							<div className="center">
-								<div className="bar"></div>
-								<h2>Episodes</h2>
+					<div className="header-right-actions">
+						<button className="action-pill-btn gray-btn" onClick={handleBack} style={{ width: "160px" }}>
+							<i className="fa-solid fa-arrow-left"></i>
+							<span>Back to Show</span>
+						</button>
+					</div>
+				</div>
+
+				{/* 3. Main Overview Grid */}
+				<div className="detail-overview-grid">
+					<div className="overview-left-column">
+						<div className="genres-section-overview">
+							<h2>Overview</h2>
+							<p className="overview-text">{seasonDetails.overview || "No overview available for this season."}</p>
+						</div>
+
+						{/* Episodes List inside Left Column */}
+						{seasonDetails.episodes && seasonDetails.episodes.length > 0 && (
+							<div className="episodes-section-redesign" style={{ marginTop: "20px" }}>
+								<div className="center" style={{ justifyContent: "flex-start", marginBottom: "15px" }}>
+									<div className="bar" style={{ background: "#8b5cf6" }}></div>
+									<h3 style={{ fontSize: "1.4rem", fontWeight: "600", color: "white", margin: 0 }}>Episodes</h3>
+								</div>
+								<div className="genres-pills-list">
+									{seasonDetails.episodes.map((episode) => (
+										<span
+											key={episode.id}
+											className="genre-pill-tag"
+											style={{ border: "1px solid rgba(139, 92, 246, 0.3)" }}
+											onClick={() =>
+												navigate(
+													`/tv/${tvDetails.id}/season/${seasonDetails.season_number}/episode/${episode.episode_number}`,
+												)
+											}
+										>
+											{episode.name}
+										</span>
+									))}
+								</div>
 							</div>
-							<div className="episodes-list">
-								{seasonDetails.episodes?.map((episode) => (
-									// <div className="card-flex" >
-									<div
-										className="season-card"
-										key={episode.id}
-										onClick={() =>
-											navigate(
-												`/tv/${tvDetails.id}/season/${seasonDetails.season_number}/episode/${episode.episode_number}`,
-											)
-										}
-									>
-										{/* <p>{season.name}</p> */}
-										<p>{episode.name?.replace(/Episode\s/i, "E")}</p>
-									</div>
-									// </div>
-								))}
-							</div>
+						)}
+					</div>
+					<div className="overview-right-column">
+						<div className="where-to-watch-card">
+							<h3>Where to Watch</h3>
+							{tvProviders && tvProviders.length > 0 ? (
+								<div className="providers-pills-grid">
+									{tvProviders.map((provider) => (
+										<div className="provider-pill-item" key={provider.provider_id}>
+											<img
+												src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+												alt={provider.provider_name}
+												className="provider-logo-img"
+											/>
+											<span className="provider-pill-name">
+												{provider.provider_name}
+											</span>
+										</div>
+									))}
+								</div>
+							) : (
+								<p className="no-providers-msg">Not available to stream currently.</p>
+							)}
 						</div>
 					</div>
 				</div>

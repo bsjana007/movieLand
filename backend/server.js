@@ -7,6 +7,7 @@ import cors from "cors";
 import express from "express";
 import connectToMongo from "./db.js";
 import watchlist from "./routes/watchlist.js";
+import watched from "./routes/watched.js";
 import authRoutes from "./routes/auth.js";
 
 connectToMongo();
@@ -27,6 +28,7 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/watchlist", watchlist);
+app.use("/api/watched", watched);
 
 app.get("/", (req, res) => {
 	res.send("API running");
