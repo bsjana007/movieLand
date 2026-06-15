@@ -102,7 +102,7 @@ function MovieDetails() {
 			return;
 		}
 
-		if (isWatchlisted) {
+		if (isWatched) {
 			removeFromWatched(movieDetails.id);
 		} else {
 			addToWatched(movieDetails);
