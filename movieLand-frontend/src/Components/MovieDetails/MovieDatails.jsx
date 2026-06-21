@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./MovieDetails.css";
 import noMovie from "../../assets/no-movie.png";
@@ -24,8 +24,21 @@ function MovieDetails() {
 	const [openSimilar, setOpenSimilar] = useState(true);
 	const [openRecommended, setOpenRecommended] = useState(true);
 	// const [isWatchlisted, setiIWatchlisted] = useState(false);
-	const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+	// const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 	const [trailer, setTrailer] = useState(null);
+	const [isMuted, setIsMuted] = useState(true);
+	const iframeRef = useRef(null);
+
+	const toggleMute = () => {
+		if (!iframeRef.current) return;
+		const command = isMuted ? "unMute" : "mute";
+		iframeRef.current.contentWindow.postMessage(
+			JSON.stringify({ event: "command", func: command }),
+			"*"
+		);
+		setIsMuted(!isMuted);
+	};
+
 	const { id } = useParams();
 	const context = useContext(movieContext);
 	const {
@@ -176,7 +189,7 @@ function MovieDetails() {
 	return (
 		<>
 			<div className="movie-details">
-				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				{/* 1. Backdrop Hero Section with Autoplay Background Trailer */}
 				<div className="detail-hero-backdrop">
 					<img
 						src={
@@ -187,13 +200,20 @@ function MovieDetails() {
 						alt={movieDetails.title}
 						className="backdrop-img"
 					/>
+					{trailer && (
+						<iframe
+							ref={iframeRef}
+							src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&loop=1&playlist=${trailer.key}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
+							title="Movie Trailer Background"
+							className="backdrop-video"
+							allow="autoplay; encrypted-media; picture-in-picture"
+							frameBorder="0"
+						/>
+					)}
 					<div className="backdrop-overlay"></div>
 					{trailer && (
-						<button
-							className="play-trailer-btn"
-							onClick={() => setIsTrailerOpen(true)}
-						>
-							<i className="fa-solid fa-play"></i>
+						<button className="mute-toggle-btn" onClick={toggleMute}>
+							<i className={`fa-solid ${isMuted ? "fa-volume-mute" : "fa-volume-up"}`}></i>
 						</button>
 					)}
 				</div>
@@ -641,31 +661,6 @@ function MovieDetails() {
 					</div>
 				</div>
 			</div>
-			{isTrailerOpen && trailer && (
-				<div
-					className="video-modal"
-					onClick={() => setIsTrailerOpen(false)}
-				>
-					<div
-						className="video-content"
-						onClick={(e) => e.stopPropagation()}
-					>
-						<button
-							className="close-btn"
-							onClick={() => setIsTrailerOpen(false)}
-						>
-							✕
-						</button>
-
-						<iframe
-							src={`https://www.youtube.com/embed/${trailer.key}`}
-							title="Movie Trailer"
-							allow="encrypted-media; picture-in-picture"
-							allowFullScreen
-						/>
-					</div>
-				</div>
-			)}
 
 			{activeReview && (
 				<div

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./MovieDetails.css";
 import profileLogo from "../../assets/no-profile-pic.jpeg";
@@ -23,8 +23,21 @@ function SeasonDetails() {
 	const [openSimilar, setOpenSimilar] = useState(true);
 	const [openRecommended, setOpenRecommended] = useState(true);
 	// const [isWatchlisted, setiIWatchlisted] = useState(false);
-	const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+	// const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 	const [trailer, setTrailer] = useState(null);
+	const [isMuted, setIsMuted] = useState(true);
+	const iframeRef = useRef(null);
+
+	const toggleMute = () => {
+		if (!iframeRef.current) return;
+		const command = isMuted ? "unMute" : "mute";
+		iframeRef.current.contentWindow.postMessage(
+			JSON.stringify({ event: "command", func: command }),
+			"*",
+		);
+		setIsMuted(!isMuted);
+	};
+
 	const { id, seasonNumber } = useParams();
 	const context = useContext(movieContext);
 	const {
@@ -147,13 +160,15 @@ function SeasonDetails() {
 			</div>
 		);
 
-	const releaseYear = seasonDetails.air_date ? seasonDetails.air_date.split("-")[0] : "N/A";
+	const releaseYear = seasonDetails.air_date
+		? seasonDetails.air_date.split("-")[0]
+		: "N/A";
 	const episodesCount = seasonDetails.episodes?.length || 0;
 
 	return (
 		<>
 			<div className="movie-details">
-				{/* 1. Backdrop Hero Section with Centered Play Button */}
+				{/* 1. Backdrop Hero Section with Autoplay Background Trailer */}
 				<div className="detail-hero-backdrop">
 					<img
 						src={
@@ -164,10 +179,22 @@ function SeasonDetails() {
 						alt={seasonDetails.name}
 						className="backdrop-img"
 					/>
+					{trailer && (
+						<iframe
+							ref={iframeRef}
+							src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&loop=1&playlist=${trailer.key}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
+							title="Season Trailer Background"
+							className="backdrop-video"
+							allow="autoplay; encrypted-media; picture-in-picture"
+							frameBorder="0"
+						/>
+					)}
 					<div className="backdrop-overlay"></div>
 					{trailer && (
-						<button className="play-trailer-btn" onClick={() => setIsTrailerOpen(true)}>
-							<i className="fa-solid fa-play"></i>
+						<button className="mute-toggle-btn" onClick={toggleMute}>
+							<i
+								className={`fa-solid ${isMuted ? "fa-volume-mute" : "fa-volume-up"}`}
+							></i>
 						</button>
 					)}
 				</div>
@@ -187,30 +214,45 @@ function SeasonDetails() {
 					</div>
 					<div className="header-center-info">
 						<p className="meta-type-duration">
-							TV Season • {releaseYear} • {episodesCount} {episodesCount === 1 ? "Episode" : "Episodes"}
+							TV Season • {releaseYear} • {episodesCount}{" "}
+							{episodesCount === 1 ? "Episode" : "Episodes"}
 						</p>
-						<h1 className="movie-detail-title">{tvDetails.name} - {seasonDetails.name}</h1>
+						<h1 className="movie-detail-title">
+							{tvDetails.name} - {seasonDetails.name}
+						</h1>
 						<div className="meta-details-grid">
 							<div className="meta-col">
 								<span className="meta-label">Season</span>
-								<span className="meta-val">S{seasonDetails.season_number}</span>
+								<span className="meta-val">
+									S{seasonDetails.season_number}
+								</span>
 							</div>
 							<div className="meta-col">
 								<span className="meta-label">Air Date</span>
-								<span className="meta-val">{seasonDetails.air_date || "N/A"}</span>
+								<span className="meta-val">
+									{seasonDetails.air_date || "N/A"}
+								</span>
 							</div>
 							<div className="meta-col">
 								<span className="meta-label">Rating</span>
-								<span className="meta-val">⭐ {seasonDetails.vote_average?.toFixed(1) || "N/A"}</span>
+								<span className="meta-val">
+									⭐ {seasonDetails.vote_average?.toFixed(1) || "N/A"}
+								</span>
 							</div>
 							<div className="meta-col">
 								<span className="meta-label">Show Status</span>
-								<span className="meta-val">{tvDetails.status || "N/A"}</span>
+								<span className="meta-val">
+									{tvDetails.status || "N/A"}
+								</span>
 							</div>
 						</div>
 					</div>
 					<div className="header-right-actions">
-						<button className="action-pill-btn gray-btn" onClick={handleBack} style={{ width: "160px" }}>
+						<button
+							className="action-pill-btn gray-btn"
+							onClick={handleBack}
+							style={{ width: "160px" }}
+						>
 							<i className="fa-solid fa-arrow-left"></i>
 							<span>Back to Show</span>
 						</button>
@@ -222,34 +264,62 @@ function SeasonDetails() {
 					<div className="overview-left-column">
 						<div className="genres-section-overview">
 							<h2>Overview</h2>
-							<p className="overview-text">{seasonDetails.overview || "No overview available for this season."}</p>
+							<p className="overview-text">
+								{seasonDetails.overview ||
+									"No overview available for this season."}
+							</p>
 						</div>
 
 						{/* Episodes List inside Left Column */}
-						{seasonDetails.episodes && seasonDetails.episodes.length > 0 && (
-							<div className="episodes-section-redesign" style={{ marginTop: "20px" }}>
-								<div className="center" style={{ justifyContent: "flex-start", marginBottom: "15px" }}>
-									<div className="bar" style={{ background: "#8b5cf6" }}></div>
-									<h3 style={{ fontSize: "1.4rem", fontWeight: "600", color: "white", margin: 0 }}>Episodes</h3>
-								</div>
-								<div className="genres-pills-list">
-									{seasonDetails.episodes.map((episode) => (
-										<span
-											key={episode.id}
-											className="genre-pill-tag"
-											style={{ border: "1px solid rgba(139, 92, 246, 0.3)" }}
-											onClick={() =>
-												navigate(
-													`/tv/${tvDetails.id}/season/${seasonDetails.season_number}/episode/${episode.episode_number}`,
-												)
-											}
+						{seasonDetails.episodes &&
+							seasonDetails.episodes.length > 0 && (
+								<div
+									className="episodes-section-redesign"
+									style={{ marginTop: "20px" }}
+								>
+									<div
+										className="center"
+										style={{
+											justifyContent: "flex-start",
+											marginBottom: "15px",
+										}}
+									>
+										<div
+											className="bar"
+											style={{ background: "#8b5cf6" }}
+										></div>
+										<h3
+											style={{
+												fontSize: "1.4rem",
+												fontWeight: "600",
+												color: "white",
+												margin: 0,
+											}}
 										>
-											{episode.name}
-										</span>
-									))}
+											Episodes
+										</h3>
+									</div>
+									<div className="genres-pills-list">
+										{seasonDetails.episodes.map((episode) => (
+											<span
+												key={episode.id}
+												className="genre-pill-tag"
+												style={{
+													border:
+														"1px solid rgba(139, 92, 246, 0.3)",
+												}}
+												onClick={() =>
+													navigate(
+														`/tv/${tvDetails.id}/season/${seasonDetails.season_number}/episode/${episode.episode_number}`,
+													)
+												}
+											>
+												{episode.name}
+											</span>
+										))}
+									</div>
 								</div>
-							</div>
-						)}
+							)}
 					</div>
 					<div className="overview-right-column">
 						<div className="where-to-watch-card">
@@ -257,7 +327,10 @@ function SeasonDetails() {
 							{tvProviders && tvProviders.length > 0 ? (
 								<div className="providers-pills-grid">
 									{tvProviders.map((provider) => (
-										<div className="provider-pill-item" key={provider.provider_id}>
+										<div
+											className="provider-pill-item"
+											key={provider.provider_id}
+										>
 											<img
 												src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
 												alt={provider.provider_name}
@@ -270,7 +343,9 @@ function SeasonDetails() {
 									))}
 								</div>
 							) : (
-								<p className="no-providers-msg">Not available to stream currently.</p>
+								<p className="no-providers-msg">
+									Not available to stream currently.
+								</p>
 							)}
 						</div>
 					</div>
@@ -615,31 +690,6 @@ function SeasonDetails() {
 					</div>
 				</div>
 			</div>
-			{isTrailerOpen && trailer && (
-				<div
-					className="video-modal"
-					onClick={() => setIsTrailerOpen(false)}
-				>
-					<div
-						className="video-content"
-						onClick={(e) => e.stopPropagation()}
-					>
-						<button
-							className="close-btn"
-							onClick={() => setIsTrailerOpen(false)}
-						>
-							✕
-						</button>
-
-						<iframe
-							src={`https://www.youtube.com/embed/${trailer.key}`}
-							title="Movie Trailer"
-							allow="encrypted-media; picture-in-picture"
-							allowFullScreen
-						/>
-					</div>
-				</div>
-			)}
 
 			{activeReview && (
 				<div

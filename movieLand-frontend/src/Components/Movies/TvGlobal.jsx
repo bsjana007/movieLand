@@ -41,7 +41,7 @@ function TvGlobal() {
 							trendingOpen ? "open" : ""
 						}`}
 					></i>
-					<span>🔥 Trending Movies of the Week</span>
+					<span>Trending Movies of the Week</span>
 				</button>
 				<div className={`dropdown ${trendingOpen ? "open" : ""}`}>
 					<TrendingTv />

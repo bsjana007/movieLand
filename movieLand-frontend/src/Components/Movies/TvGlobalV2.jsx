@@ -42,7 +42,7 @@ function TvGlobalV2() {
 							onClick={trendingOpenToggle}
 						>
 							<div className="global-section-title-wrap">
-								<span className="global-section-icon">🔥</span>
+								{/* <span className="global-section-icon">🔥</span> */}
 								<h2>Trending TV Shows of the Week</h2>
 							</div>
 							<i
@@ -63,7 +63,7 @@ function TvGlobalV2() {
 							onClick={popularOpenToggle}
 						>
 							<div className="global-section-title-wrap">
-								<span className="global-section-icon">⭐</span>
+								{/* <span className="global-section-icon">⭐</span> */}
 								<h2>Popular TV Shows</h2>
 							</div>
 							<i
@@ -84,7 +84,7 @@ function TvGlobalV2() {
 							onClick={topRatedOpenToggle}
 						>
 							<div className="global-section-title-wrap">
-								<span className="global-section-icon">🏆</span>
+								{/* <span className="global-section-icon">🏆</span> */}
 								<h2>Top Rated TV Shows</h2>
 							</div>
 							<i
@@ -105,7 +105,7 @@ function TvGlobalV2() {
 							onClick={upcomingOpenToggle}
 						>
 							<div className="global-section-title-wrap">
-								<span className="global-section-icon">📅</span>
+								{/* <span className="global-section-icon">📅</span> */}
 								<h2>Airing Today</h2>
 							</div>
 							<i

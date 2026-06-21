@@ -26,7 +26,8 @@ function HomeIndianV2() {
 						Indian <span className="highlight">Cinema</span>
 					</h1>
 					<p className="indian-hero-subtitle">
-						Explore the magic of Bollywood, Tollywood, Kollywood, and beyond. Experience the vibrant storytelling of India.
+						Explore the magic of Bollywood, Tollywood, Kollywood, and
+						beyond. Experience the vibrant storytelling of India.
 					</p>
 				</div>
 			</div>
@@ -40,7 +41,7 @@ function HomeIndianV2() {
 						onClick={trendingOpenToggle}
 					>
 						<div className="indian-section-title-wrap">
-							<span className="indian-section-icon">🔥</span>
+							{/* <span className="indian-section-icon">🔥</span> */}
 							<h2>Trending Movies in India</h2>
 						</div>
 						<i
@@ -61,7 +62,7 @@ function HomeIndianV2() {
 						onClick={popularOpenToggle}
 					>
 						<div className="indian-section-title-wrap">
-							<span className="indian-section-icon">⭐</span>
+							{/* <span className="indian-section-icon">⭐</span> */}
 							<h2>Popular Movies</h2>
 						</div>
 						<i
@@ -82,7 +83,7 @@ function HomeIndianV2() {
 						onClick={topRatedOpenToggle}
 					>
 						<div className="indian-section-title-wrap">
-							<span className="indian-section-icon">🏆</span>
+							{/* <span className="indian-section-icon">🏆</span> */}
 							<h2>Top Rated Movies</h2>
 						</div>
 						<i
@@ -103,7 +104,7 @@ function HomeIndianV2() {
 						onClick={upcomingOpenToggle}
 					>
 						<div className="indian-section-title-wrap">
-							<span className="indian-section-icon">📅</span>
+							{/* <span className="indian-section-icon">📅</span> */}
 							<h2>Upcoming Movies</h2>
 						</div>
 						<i

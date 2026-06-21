@@ -41,7 +41,7 @@ function MoviesGlobalV2() {
 						onClick={trendingOpenToggle}
 					>
 						<div className="global-section-title-wrap">
-							<span className="global-section-icon">🔥</span>
+							{/* <span className="global-section-icon">🔥</span> */}
 							<h2>Trending Movies of the Week</h2>
 						</div>
 						<i
@@ -62,7 +62,7 @@ function MoviesGlobalV2() {
 						onClick={popularToggle}
 					>
 						<div className="global-section-title-wrap">
-							<span className="global-section-icon">⭐</span>
+							{/* <span className="global-section-icon">⭐</span> */}
 							<h2>Popular Movies</h2>
 						</div>
 						<i
@@ -83,7 +83,7 @@ function MoviesGlobalV2() {
 						onClick={topRatedToggle}
 					>
 						<div className="global-section-title-wrap">
-							<span className="global-section-icon">🏆</span>
+							{/* <span className="global-section-icon">🏆</span> */}
 							<h2>Top Rated Movies</h2>
 						</div>
 						<i
@@ -104,7 +104,7 @@ function MoviesGlobalV2() {
 						onClick={upcomingToggle}
 					>
 						<div className="global-section-title-wrap">
-							<span className="global-section-icon">📅</span>
+							{/* <span className="global-section-icon">📅</span> */}
 							<h2>Upcoming Movies</h2>
 						</div>
 						<i
