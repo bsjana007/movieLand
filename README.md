@@ -1,4 +1,4 @@
-# 🎬 MovieLand
+# MovieLand
 
 <div align="center">
   <h3>A MERN Stack Movie & Web Series Information Platform</h3>
@@ -9,32 +9,32 @@
 
 ---
 
-## 🧠 Overview
+## Overview
 
 **MovieLand** is a full-stack MERN application that allows users to explore:
 
-- 🎥 Movie details
-- 📺 Web series information
-- 📂 Episode breakdowns
-- 🎭 Character details
+- Movie details
+- Web series information
+- Episode breakdowns
+- Character details
 
 The project is built using **React (Frontend)**, **Node.js & Express (Backend)**, and **MongoDB (Database)**. It focuses on clean UI design, scalable architecture, and dynamic API-based rendering.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔎 Search movies and web series
-- 📄 Detailed information pages
-- 📺 Episode-level breakdown
-- 🎭 Character profile view
-- ⚡ Fast and responsive interface
-- 📱 Mobile-friendly design
-- 🔄 REST API integration
+- Search movies and web series
+- Detailed information pages
+- Episode-level breakdown
+- Character profile view
+- Fast and responsive interface
+- Mobile-friendly design
+- REST API integration
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### 🔹 Frontend
 
@@ -59,7 +59,7 @@ The project is built using **React (Frontend)**, **Node.js & Express (Backend)**
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### Clone the Repository
 
